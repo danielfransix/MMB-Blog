@@ -1,3 +1,9 @@
+/*
+ * Styles.css - Consolidated Version
+ * This file has been optimized by consolidating repeated styles and using CSS variables
+ * for consistent styling across the website.
+ */
+
 /* Base Styles */
 :root {
     --primary-color: #007bff;
@@ -6,9 +12,13 @@
     --dark-color: #343a40;
     --success-color: #28a745;
     --danger-color: #dc3545;
-    --font-headings: 'Cantora One', sans-serif;
+    --font-headings: 'Manrope', sans-serif;
     --font-body: 'Shadows Into Light Two', cursive;
     --transition: all 0.3s ease;
+    --border-radius: 8px;
+    --border-standard: 1.5px solid black;
+    --border-thick: 3px solid black;
+    --heading-margin: 20px;
 }
 
 html {
@@ -48,10 +58,8 @@ img {
 }
 
 .header-logo-div {
-    width: 4rem;
-    height: 4rem;
-    border-radius: 50%;
-    overflow: hidden;
+    width: 10rem;
+    height: 10rem;
     display: flex;
     justify-content: center;
     align-items: flex-start;
@@ -63,7 +71,11 @@ img {
     object-fit: cover;
 }
 
-.container {
+.container-vertical {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
     width: 100%;
     max-width: 1200px;
     margin: 0 auto;
@@ -86,15 +98,16 @@ header .container {
     align-items: center;
 }
 
-.header-container {
+.header-wrapper {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
     text-align: center;
+    gap: 20px;
 }
 
-.header-container h1 {
+.header-wrapper h1 {
     font-size: 1.8rem;
     font-weight: 700;
     color: var(--dark-color);
@@ -180,9 +193,9 @@ main {
 
 .post-card {
     background-color: #fff;
-    border-radius: 8px;
+    border-radius: var(--border-radius);
     overflow: hidden;
-    border: 1.5px solid black;
+    border: var(--border-standard);
     transition: var(--transition);
 }
 
@@ -238,10 +251,11 @@ main {
     margin-bottom: 50px;
 }
 
+/* Section Headings - Consolidated */
 .featured-posts h2, 
 .blog-posts h2 {
     font-size: 1.8rem;
-    margin-bottom: 20px;
+    margin-bottom: var(--heading-margin);
     padding-bottom: 10px;
     border-bottom: 2px solid var(--light-color);
 }
@@ -255,13 +269,13 @@ main {
 }
 
 .about-image img {
-    border-radius: 8px;
-    border: 3px solid black;
+    border-radius: var(--border-radius);
+    border: var(--border-thick);
 }
 
 .about-text h3 {
     font-size: 1.8rem;
-    margin-bottom: 20px;
+    margin-bottom: var(--heading-margin);
 }
 
 .about-text h4 {
@@ -283,24 +297,51 @@ main {
     margin-bottom: 10px;
 }
 
-.social-links-about {
+/* Social Links - Consolidated */
+.social-links-about,
+.social-links-contact,
+.social-links {
     display: flex;
     gap: 15px;
+}
+
+.social-links-about {
     margin-top: 20px;
 }
 
-.social-links-about a {
+.social-links-contact {
+    flex-direction: column;
+    gap: 8px;
+}
+
+.social-links-about a,
+.social-links-contact a,
+.social-links a {
     display: inline-flex;
     align-items: center;
     color: var(--secondary-color);
     transition: var(--transition);
 }
 
-.social-links-about a i {
+.social-links a {
+    color: #fff;
+    margin-left: 20px;
+    font-size: 1.2rem;
+}
+
+.social-links-about a i,
+.social-links-contact a i {
     margin-right: 5px;
 }
 
-.social-links-about a:hover {
+.social-links-contact a i {
+    font-size: 1rem;
+    margin-right: 8px;
+}
+
+.social-links-about a:hover,
+.social-links-contact a:hover,
+.social-links a:hover {
     color: var(--primary-color);
 }
 
@@ -314,7 +355,7 @@ main {
 .contact-info h3,
 .contact-form h3 {
     font-size: 1.6rem;
-    margin-bottom: 20px;
+    margin-bottom: var(--heading-margin);
 }
 
 .contact-methods {
@@ -336,21 +377,7 @@ main {
     margin-bottom: 8px;
 }
 
-.social-links-contact {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-}
-
-.social-links-contact a {
-    display: inline-flex;
-    align-items: center;
-}
-
-.social-links-contact a i {
-    font-size: 1rem;
-    margin-right: 8px;
-}
+/* Removed duplicate social-links-contact styles as they're now consolidated above */
 
 /* Forms */
 .form-group {
@@ -368,17 +395,17 @@ textarea {
     width: 100%;
     padding: 12px;
     border: 1px solid #ddd;
-    border-radius: 4px;
-    font-family: var(--font-primary);
+    border-radius: var(--border-radius);
     font-size: 1rem;
 }
 
 input:focus, 
 textarea:focus {
     outline: none;
-    border: 3px solid black;
+    border: var(--border-thick);
 }
 
+/* Button Styles - Consolidated */
 .btn-submit {
     background-color: var(--primary-color);
     color: white;
@@ -386,7 +413,7 @@ textarea:focus {
     padding: 12px 24px;
     font-size: 1rem;
     font-weight: 500;
-    border-radius: 4px;
+    border-radius: var(--border-radius);
     cursor: pointer;
     transition: var(--transition);
 }
@@ -415,12 +442,12 @@ textarea:focus {
 }
 
 .post-featured-image img {
-    border-radius: 8px;
-    border: 3px solid black;
+    border-radius: var(--border-radius);
+    border: var(--border-thick);
 }
 
 .post-content {
-    font-family: var(--font-secondary);
+    font-family: var(--font-body);
     font-size: 1.1rem;
     line-height: 1.8;
 }
@@ -468,19 +495,29 @@ textarea:focus {
     gap: 20px;
 }
 
-.post-tags a {
+/* Tag Links - Consolidated */
+.post-tags a,
+.pagination a {
     display: inline-block;
     background-color: var(--light-color);
+    border-radius: var(--border-radius);
+}
+
+.post-tags a {
     padding: 5px 10px;
     margin-right: 10px;
-    border-radius: 4px;
     font-size: 0.9rem;
     color: var(--secondary-color);
 }
 
-.post-tags a:hover {
+.post-tags a:hover,
+.pagination a.active {
     background-color: var(--primary-color);
     color: white;
+}
+
+.pagination a:hover:not(.active) {
+    background-color: #ddd;
 }
 
 .post-share a {
@@ -539,10 +576,15 @@ textarea:focus {
     margin-bottom: 30px;
 }
 
+.comment-avatar img,
+.header-logo-div {
+    border-radius: 50%;
+    overflow: hidden;
+}
+
 .comment-avatar img {
     width: 60px;
     height: 60px;
-    border-radius: 50%;
 }
 
 .comment-content {
@@ -580,21 +622,9 @@ textarea:focus {
 }
 
 .pagination a {
-    display: inline-block;
     margin: 0 5px;
     padding: 8px 15px;
-    border-radius: 4px;
-    background-color: var(--light-color);
     color: var(--dark-color);
-}
-
-.pagination a.active {
-    background-color: var(--primary-color);
-    color: white;
-}
-
-.pagination a:hover:not(.active) {
-    background-color: #ddd;
 }
 
 .pagination a.next {
@@ -615,23 +645,14 @@ footer .container {
     align-items: center;
 }
 
-.social-links a {
-    color: #fff;
-    margin-left: 20px;
-    font-size: 1.2rem;
-    transition: var(--transition);
-}
-
-.social-links a:hover {
-    color: var(--primary-color);
-}
+/* Removed duplicate social-links styles as they're now consolidated above */
 
 .header-links-div {
     display: flex;
     gap: 15px;
-    margin: 10px 0;
 }
 
+/* Social Icon - Consolidated */
 .social-icon {
     display: flex;
     justify-content: center;
@@ -671,4 +692,4 @@ footer .container {
 
 .social-icon .fa-twitter {
     color: #fff;
-} 
+}

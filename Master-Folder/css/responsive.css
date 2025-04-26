@@ -65,7 +65,7 @@
         flex-direction: column;
     }
     
-    .header-container {
+    .header-wrapper {
         margin-bottom: 15px;
     }
     
@@ -170,4 +170,4 @@
         flex-wrap: wrap;
         gap: 10px;
     }
-} 
+}

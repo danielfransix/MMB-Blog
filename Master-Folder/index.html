@@ -1,45 +1,49 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Blog</title>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cantora+One&family=Shadows+Into+Light+Two&display=swap">
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700&family=Shadows+Into+Light+Two&display=swap">
     <link rel="stylesheet" href="css/styles.css">
     <link rel="stylesheet" href="css/responsive.css">
 </head>
+
 <body>
     <header>
-        <div class="container">
-            <div class="header-container">
-                <div class="header-logo-div">
-                    <img src="img/logo.jpg" alt="Logo" class="header-logo">
+        <section class="header-section">
+            <div class="container-vertical">
+                <div class="header-wrapper">
+                    <div class="header-logo-div">
+                        <img src="img/logo.jpg" alt="Logo" class="header-logo">
+                    </div>
+                    <div class="header-links-div">
+                        <div class="social-icon">
+                            <a href="#" aria-label="Instagram"><img src="img/instagram.svg" alt="Instagram"></a>
+                        </div>
+                        <div class="social-icon">
+                            <a href="#" aria-label="Facebook"><img src="img/facebook.svg" alt="Facebook"></a>
+                        </div>
+                        <div class="social-icon">
+                            <a href="#" aria-label="LinkedIn"><img src="img/linkedin.svg" alt="LinkedIn"></a>
+                        </div>
+                        <div class="social-icon">
+                            <a href="#" aria-label="Twitter"><img src="img/twitter.svg" alt="Twitter"></a>
+                        </div>
+                    </div>
                 </div>
-                <div class="header-links-div">
-                    <div class="social-icon">
-                        <a href="#" aria-label="Instagram"><img src="img/instagram.svg" alt="Instagram"></a>
-                    </div>
-                    <div class="social-icon">
-                        <a href="#" aria-label="Facebook"><img src="img/facebook.svg" alt="Facebook"></a>
-                    </div>
-                    <div class="social-icon">
-                        <a href="#" aria-label="LinkedIn"><img src="img/linkedin.svg" alt="LinkedIn"></a>
-                    </div>
-                    <div class="social-icon">
-                        <a href="#" aria-label="Twitter"><img src="img/twitter.svg" alt="Twitter"></a>
-                    </div>
-                </div>
-                <h1>Make Me Beautiful</h1>
+                <nav>
+                    <ul>
+                        <li><a href="index.html" class="active">Home</a></li>
+                        <li><a href="blog.html">Blog</a></li>
+                        <li><a href="about.html">About</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </nav>
             </div>
-            <nav>
-                <ul>
-                    <li><a href="index.html" class="active">Home</a></li>
-                    <li><a href="blog.html">Blog</a></li>
-                    <li><a href="about.html">About</a></li>
-                    <li><a href="contact.html">Contact</a></li>
-                </ul>
-            </nav>
-        </div>
+        </section>
     </header>
 
     <section class="hero">
@@ -61,7 +65,8 @@
                         <div class="post-content">
                             <h3><a href="posts/post1.html">First Blog Post Title</a></h3>
                             <p class="post-meta">Published on <time datetime="2023-07-10">July 10, 2023</time></p>
-                            <p class="post-excerpt">This is a short excerpt from the blog post that gives readers an idea of what the post is about...</p>
+                            <p class="post-excerpt">This is a short excerpt from the blog post that gives readers an
+                                idea of what the post is about...</p>
                             <a href="posts/post1.html" class="read-more">Read More</a>
                         </div>
                     </article>
@@ -72,7 +77,8 @@
                         <div class="post-content">
                             <h3><a href="posts/post2.html">Second Blog Post Title</a></h3>
                             <p class="post-meta">Published on <time datetime="2023-07-15">July 15, 2023</time></p>
-                            <p class="post-excerpt">This is a short excerpt from the blog post that gives readers an idea of what the post is about...</p>
+                            <p class="post-excerpt">This is a short excerpt from the blog post that gives readers an
+                                idea of what the post is about...</p>
                             <a href="posts/post2.html" class="read-more">Read More</a>
                         </div>
                     </article>
@@ -94,4 +100,5 @@
 
     <script src="js/main.js"></script>
 </body>
-</html> 
+
+</html>
