@@ -1,5 +1,6 @@
 "use client";
 import { useState } from "react";
+import Image from "next/image";
 
 interface CommentFormProps {
   onSubmit?: (data: { name: string; email: string; comment: string }) => void;
@@ -8,6 +9,8 @@ interface CommentFormProps {
   submitButtonText?: string;
   showCancelButton?: boolean;
 }
+
+type CommentFormStatus = 'idle' | 'success' | 'error';
 
 export default function CommentForm({ 
   onSubmit, 
@@ -19,18 +22,100 @@ export default function CommentForm({
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [comment, setComment] = useState("");
+  const [formStatus, setFormStatus] = useState<CommentFormStatus>('idle');
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (onSubmit) {
-      onSubmit({ name, email, comment });
+    
+    // Simulate comment submission
+    try {
+      // Simulate API call delay
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      
+      // Simulate random success/failure for demo purposes
+      // In real implementation, this would be your actual API call
+      const isSuccess = Math.random() > 0.2; // 80% success rate for demo
+      
+      if (isSuccess) {
+        setFormStatus('success');
+        // Call the original onSubmit if provided
+        if (onSubmit) {
+          onSubmit({ name, email, comment });
+        }
+        // Reset form on success
+        setName("");
+        setEmail("");
+        setComment("");
+      } else {
+        setFormStatus('error');
+      }
+    } catch (error) {
+      setFormStatus('error');
     }
-    // Reset form
+  };
+
+  const resetForm = () => {
+    setFormStatus('idle');
     setName("");
     setEmail("");
     setComment("");
   };
 
+  // Success State
+  if (formStatus === 'success') {
+    return (
+      <div className="comment-form flex flex-col gap-4">
+        <div className="flex flex-col items-center justify-center space-y-4 py-6">
+          <Image
+            src="/img/success.svg"
+            alt="Success"
+            width={60}
+            height={60}
+            className="w-15 h-15"
+          />
+          <div className="text-center space-y-2">
+            <h4 className="text-lg font-semibold text-green-600">Comment Posted Successfully!</h4>
+            <p className="text-gray-600 text-sm">Your comment has been added and is now visible.</p>
+          </div>
+          <button
+            onClick={resetForm}
+            className="px-4 py-2 bg-black text-white hover:bg-green-500 hover:text-black transition-colors rounded-[2px] text-sm"
+          >
+            Add Another Comment
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  // Error State
+  if (formStatus === 'error') {
+    return (
+      <div className="comment-form flex flex-col gap-4">
+        <div className="flex flex-col items-center justify-center space-y-4 py-6">
+          <Image
+            src="/img/failure.svg"
+            alt="Error"
+            width={60}
+            height={60}
+            className="w-15 h-15"
+          />
+          <div className="text-center space-y-2">
+            <h4 className="text-lg font-semibold text-red-600">Comment Failed to Post</h4>
+            <p className="text-gray-600 text-sm">There was an error posting your comment. Please try again.</p>
+          </div>
+          <button
+            onClick={resetForm}
+            className="px-4 py-2 bg-black text-white hover:bg-green-500 hover:text-black transition-colors rounded-[2px] text-sm"
+          >
+            Try Again
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  // Default Form State
   return (
     <form onSubmit={handleSubmit} className="comment-form flex flex-col gap-1">
       <div className="flex flex-col sm:flex-row gap-1">
