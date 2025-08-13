@@ -16,26 +16,29 @@ export default function AuthorInfo({ authorName, showDate = true, publishedDate,
   }
 
   return (
-    <div className={`flex items-center gap-4 ${className}`}>
-      <div className="w-12 h-12 rounded-sm overflow-hidden">
+    <div className={`author-info-container ${className}`}>
+      <div className="author-info-avatar">
         {author.picture ? (
           <Image
             src={author.picture}
             alt={author.name}
             width={48}
             height={48}
-            className="w-full h-full object-cover"
+            className="author-info-image"
           />
         ) : (
-          <div className="w-full h-full bg-gray-300 flex items-center justify-center">
-            <span className="text-gray-600 font-bold">{authorName?.charAt(0).toUpperCase()}</span>
+          <div className="author-info-placeholder">
+            <span className="author-info-placeholder-text">{authorName?.charAt(0).toUpperCase()}</span>
           </div>
         )}
       </div>
       <div>
-        <p className="font-medium">{authorName}</p>
+        <div className="author-info-name-container">
+          <p className="author-info-name">by</p>
+          <p className="author-info-name">{author.name}</p>
+        </div>
         {showDate && publishedDate && (
-          <p className="text-gray-600 text-sm">
+          <p className="author-info-date">
             Published on {publishedDate}
           </p>
         )}

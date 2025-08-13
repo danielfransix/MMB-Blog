@@ -7,6 +7,7 @@ import AuthorInfo from "../../../components/AuthorInfo";
 import { useState, use } from "react";
 import PostCard from "../../../components/PostCard";
 import Comment from "../../../components/Comment";
+import NewsletterSubscription from "../../../components/NewsletterSubscription";
 
 interface BlogPostPageProps {
   params: Promise<{
@@ -109,40 +110,14 @@ export default function BlogPostPage({ params }: BlogPostPageProps) {
         </div>
 
         {/* Newsletter Subscription */}
-        <div className="newsletter-container">
-          <h3 className="newsletter-title">Subscribe to Make me Beautiful</h3>
-          <p className="newsletter-subtitle">by Stephanie Ava</p>
-          
-          {isSubscribed ? (
-            <div className="newsletter-success">
-              Thank you for subscribing!
-            </div>
-          ) : (
-            <form onSubmit={handleSubscribe} className="newsletter-form">
-              <input
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="Email"
-                required
-                className="newsletter-input"
-              />
-              <button
-                type="submit"
-                className="newsletter-submit-button"
-              >
-                Subscribe
-              </button>
-            </form>
-          )}
-        </div>
+        <NewsletterSubscription />
 
         {/* Comments Section */}
         <div className="comments-section">
           <h3 className="comments-title">Leave a Reply</h3>
           
-          <form onSubmit={handleComment} className="comment-form">
-            <div className="flex gap-1">
+          <form onSubmit={handleComment} className="comment-form flex flex-col gap-1">
+            <div className="flex flex-col sm:flex-row gap-1">
               <input
                 type="text"
                 value={name}
@@ -159,7 +134,7 @@ export default function BlogPostPage({ params }: BlogPostPageProps) {
             </div>
             
             <div 
-              className="flex gap-1 w-full border border-gray-300 focus-within:ring-2 focus-within:ring-green-500 hover:border-green-500 transition-colors rounded-sm"
+              className="flex items-start gap-1 w-full border border-gray-300 focus-within:ring-2 focus-within:ring-green-500 hover:border-green-500 transition-colors rounded-sm"
               onClick={(e) => {
                 const textarea = e.currentTarget.querySelector('textarea');
                 if (textarea && e.target !== e.currentTarget.querySelector('.image-upload')) {
@@ -193,7 +168,7 @@ export default function BlogPostPage({ params }: BlogPostPageProps) {
               />
             </div>
             
-            <div className="flex items-center gap-2 mb-4">
+            <div className="flex flex-row items-center gap-1 mb-4 flex-wrap">
               <input
                 type="checkbox"
                 id="save-info"

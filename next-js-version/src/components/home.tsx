@@ -17,33 +17,33 @@ import {
 
 export function Home() {
   return (
-    <div className="flex flex-col items-start gap-y-10">
-      <div className="w-full flex items-stretch justify-evenly">
+    <div className="home-container">
+      <div className="home-nav-wrapper">
         <NavigationMenu viewport={false} className="w-full">
-          <div className="flex flex-col justify-between items-center gap-y-4 w-full">
-            <div className="text-base">
+          <div className="home-nav-content">
+            <div className="home-logo-container">
               <link />
               <img src="https://wqnmyfkavrotpmupbtou.supabase.co/storage/v1/object/public/user-assets/1169/components/Ellipse5-VXn6niw0XcU.png" alt="MakeMeBeautiful blog logo" />
             </div>
-            <div className="flex items-center gap-x-6">
-              <div className="size-10 hover:text-[var(--hover-green)] transition-colors">
-                <Icon icon="mingcute:facebook-line" className="h-full w-full" />
+            <div className="home-social-container">
+              <div className="home-social-icon">
+                <Icon icon="mingcute:facebook-line" className="home-social-icon-svg" />
               </div>
-              <div className="size-10 hover:text-[var(--hover-green)] transition-colors">
-                <Icon icon="mingcute:social-x-line" className="h-full w-full" />
+              <div className="home-social-icon">
+                <Icon icon="mingcute:social-x-line" className="home-social-icon-svg" />
               </div>
-              <div className="size-10 hover:text-[var(--hover-green)] transition-colors">
-                <Icon icon="mingcute:mail-line" className="h-full w-full" />
+              <div className="home-social-icon">
+                <Icon icon="mingcute:mail-line" className="home-social-icon-svg" />
               </div>
             </div>
-            <hr className="w-full bg-black" />
-            <NavigationMenuList className="justify-between items-center gap-x-8">
-              <div className="flex justify-evenly items-center gap-x-8">
-                <div className="flex items-center gap-x-1">
-                  <p className="font-bold">MakeMeBeautiful</p>
-                  <div className="w-2 h-2 bg-chart-2 rounded-full" />
+            <hr className="home-divider" />
+            <NavigationMenuList className="home-nav-list">
+              <div className="home-nav-main">
+                <div className="home-brand-container">
+                  <p className="home-brand-text">MakeMeBeautiful</p>
+                  <div className="home-brand-dot" />
                 </div>
-                <div className="flex">
+                <div className="home-nav-links">
                   <NavigationMenuItem>
                     <NavigationMenuLink href="/docs">Home</NavigationMenuLink>
                   </NavigationMenuItem>
@@ -55,39 +55,39 @@ export function Home() {
                   </NavigationMenuItem>
                 </div>
                 <div />
-                <div className="w-4" role="search">
-                  <Icon icon="mingcute:search-line" className="w-full h-auto" />
+                <div className="home-search-icon" role="search">
+                  <Icon icon="mingcute:search-line" className="home-search-svg" />
                 </div>
               </div>
             </NavigationMenuList>
-            <hr className="w-full bg-black" />
+            <hr className="home-divider" />
           </div>
         </NavigationMenu>
       </div>
-      <div className="flex flex-col gap-y-6">
-        <div className="border-2 rounded-xs border-primary w-full h-150 overflow-clip">
+      <div className="home-content">
+        <div className="home-hero-image-container">
           <img
             src="https://wqnmyfkavrotpmupbtou.supabase.co/storage/v1/object/public/user-assets/1169/components/HeroImage-zzRGYhaHYLm.png"
-            className="w-full h-auto"
+            className="home-hero-image"
             alt="Featured blog post hero image"
           />
         </div>
         <div>
-          <h2 className="font-heading font-semibold text-3xl">This is a very nice blogpost</h2>
+          <h2 className="home-hero-title">This is a very nice blogpost</h2>
         </div>
-        <div className="flex gap-x-2 items-center">
-          <div className="flex items-center gap-x-1">
+        <div className="home-meta-container">
+          <div className="home-tag-container">
             <Icon icon="mingcute:tag-line" />
             Tag
           </div>
-          <div className="w-2 h-2 bg-primary rounded-full" />
+          <div className="w-2 h-2 bg-primary rounded-full hidden md:block" />
           <div className="flex items-center gap-x-1">
             <Icon icon="mingcute:calendar-line" />
             February 12, 2025
           </div>
         </div>
         <div className="flex items-center">
-          <div className="w-2 h-2 bg-primary rounded-full" />
+          <div className="w-2 h-2 bg-primary rounded-full hidden md:block" />
           <hr className="w-full bg-black" />
         </div>
         <div>
@@ -108,12 +108,12 @@ export function Home() {
               <Icon icon="mingcute:thumb-up-line" />
               <a className="hover:text-[var(--hover-green)] transition-colors">10</a>
             </div>
-            <div className="w-2 h-2 bg-primary rounded-full" />
+            <div className="w-2 h-2 bg-primary rounded-full hidden md:block" />
             <div className="flex items-center gap-x-1">
               <Icon icon="iconamoon:comment" />
               <a className="hover:text-[var(--hover-green)] transition-colors">10</a>
             </div>
-            <div className="w-2 h-2 bg-primary rounded-full" />
+            <div className="w-2 h-2 bg-primary rounded-full hidden md:block" />
             <div className="flex items-center gap-x-1">
               <Icon icon="ic:baseline-share" />
               <a className="hover:text-[var(--hover-green)] transition-colors">10</a>
@@ -122,7 +122,7 @@ export function Home() {
         </div>
       </div>
       <div className="flex flex-col gap-y-6">
-        <h1 className="font-heading text-3xl font-semibold sm:text-4xl text-center">
+        <h1 className="font-sans text-3xl font-semibold sm:text-4xl text-center">
           Popular Posts
         </h1>
         <div className="flex gap-x-2">
@@ -134,7 +134,7 @@ export function Home() {
                 alt="Popular blog post thumbnail"
               />
             </div>
-            <h3 className="font-heading font-semibold text-2xl">This is a very nice blogpost</h3>
+            <h3 className="font-sans font-semibold text-2xl">This is a very nice blogpost</h3>
             <button className="flex items-center gap-x-1 hover:text-[var(--hover-green)] transition-colors">
               <p className="font-bold">Read Post</p>
               <Icon icon="mingcute:right-line" />
@@ -148,7 +148,7 @@ export function Home() {
                 alt="Popular blog post thumbnail"
               />
             </div>
-            <h3 className="font-heading font-semibold text-2xl">This is a very nice blogpost</h3>
+            <h3 className="font-sans font-semibold text-2xl">This is a very nice blogpost</h3>
             <button className="flex items-center gap-x-1 hover:text-[var(--hover-green)] transition-colors">
               <p className="font-bold">Read Post</p>
               <Icon icon="mingcute:right-line" />
@@ -162,7 +162,7 @@ export function Home() {
                 alt="Popular blog post thumbnail"
               />
             </div>
-            <h3 className="font-heading font-semibold text-2xl">This is a very nice blogpost</h3>
+            <h3 className="font-sans font-semibold text-2xl">This is a very nice blogpost</h3>
             <button className="flex items-center gap-x-1 hover:text-[var(--hover-green)] transition-colors">
               <p className="font-bold">Read Post</p>
               <Icon icon="mingcute:right-line" />
@@ -171,29 +171,29 @@ export function Home() {
         </div>
       </div>
       <div className="flex flex-col gap-y-6">
-        <div className="border-2 rounded-xs border-primary w-full h-150 overflow-clip">
+        <div className="border-2 rounded-xs border-primary w-full overflow-hidden relative" style={{aspectRatio: '3/2'}}>
           <img
             src="https://wqnmyfkavrotpmupbtou.supabase.co/storage/v1/object/public/user-assets/1169/components/HeroImage-zzRGYhaHYLm.png"
-            className="w-full h-auto"
+            className="w-full h-full object-cover"
             alt="Blog post hero image"
           />
         </div>
         <div>
-          <h2 className="font-heading font-semibold text-3xl">This is a very nice blogpost</h2>
+          <h2 className="font-sans font-semibold text-3xl">This is a very nice blogpost</h2>
         </div>
         <div className="flex gap-x-2 items-center">
           <div className="flex items-center gap-x-1">
             <Icon icon="mingcute:tag-line" />
             Tag
           </div>
-          <div className="w-2 h-2 bg-primary rounded-full" />
+          <div className="w-2 h-2 bg-primary rounded-full hidden md:block" />
           <div className="flex items-center gap-x-1">
             <Icon icon="mingcute:calendar-line" />
             February 12, 2025
           </div>
         </div>
         <div className="flex items-center">
-          <div className="w-2 h-2 bg-primary rounded-full" />
+          <div className="w-2 h-2 bg-primary rounded-full hidden md:block" />
           <hr className="w-full bg-black" />
         </div>
         <div>
@@ -214,12 +214,12 @@ export function Home() {
               <Icon icon="mingcute:thumb-up-line" />
               <a className="hover:text-[var(--hover-green)] transition-colors">10</a>
             </div>
-            <div className="w-2 h-2 bg-primary rounded-full" />
+            <div className="w-2 h-2 bg-primary rounded-full hidden md:block" />
             <div className="flex items-center gap-x-1">
               <Icon icon="iconamoon:comment" />
               <a className="hover:text-[var(--hover-green)] transition-colors">10</a>
             </div>
-            <div className="w-2 h-2 bg-primary rounded-full" />
+            <div className="w-2 h-2 bg-primary rounded-full hidden md:block" />
             <div className="flex items-center gap-x-1">
               <Icon icon="ic:baseline-share" />
               <a className="hover:text-[var(--hover-green)] transition-colors">10</a>
@@ -228,29 +228,29 @@ export function Home() {
         </div>
       </div>
       <div className="flex flex-col gap-y-6">
-        <div className="border-2 rounded-xs border-primary w-full h-150 overflow-clip">
+        <div className="border-2 rounded-xs border-primary w-full overflow-hidden relative" style={{aspectRatio: '3/2'}}>
           <img
             src="https://wqnmyfkavrotpmupbtou.supabase.co/storage/v1/object/public/user-assets/1169/components/HeroImage-zzRGYhaHYLm.png"
-            className="w-full h-auto"
+            className="w-full h-full object-cover"
             alt="Blog post hero image"
           />
         </div>
         <div>
-          <h2 className="font-heading font-semibold text-3xl">This is a very nice blogpost</h2>
+          <h2 className="font-sans font-semibold text-3xl">This is a very nice blogpost</h2>
         </div>
         <div className="flex gap-x-2 items-center">
           <div className="flex items-center gap-x-1">
             <Icon icon="mingcute:tag-line" />
             Tag
           </div>
-          <div className="w-2 h-2 bg-primary rounded-full" />
+          <div className="w-2 h-2 bg-primary rounded-full hidden md:block" />
           <div className="flex items-center gap-x-1">
             <Icon icon="mingcute:calendar-line" />
             February 12, 2025
           </div>
         </div>
         <div className="flex items-center">
-          <div className="w-2 h-2 bg-primary rounded-full" />
+          <div className="w-2 h-2 bg-primary rounded-full hidden md:block" />
           <hr className="w-full bg-black" />
         </div>
         <div>
@@ -271,12 +271,12 @@ export function Home() {
               <Icon icon="mingcute:thumb-up-line" />
               <a className="hover:text-[var(--hover-green)] transition-colors">10</a>
             </div>
-            <div className="w-2 h-2 bg-primary rounded-full" />
+            <div className="w-2 h-2 bg-primary rounded-full hidden md:block" />
             <div className="flex items-center gap-x-1">
               <Icon icon="iconamoon:comment" />
               <a className="hover:text-[var(--hover-green)] transition-colors">10</a>
             </div>
-            <div className="w-2 h-2 bg-primary rounded-full" />
+            <div className="w-2 h-2 bg-primary rounded-full hidden md:block" />
             <div className="flex items-center gap-x-1">
               <Icon icon="ic:baseline-share" />
               <a className="hover:text-[var(--hover-green)] transition-colors">10</a>

@@ -97,7 +97,7 @@ export default function HeroCarousel({ posts }: HeroCarouselProps) {
         <button
           onClick={goToPrevious}
           disabled={currentIndex === 0}
-          className="p-2 rounded-full border-2 border-black hover:border-[var(--hover-green)] hover:text-[var(--hover-green)] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+          className="p-2 rounded-[2px] border-2 border-black hover:border-[var(--hover-green)] hover:text-[var(--hover-green)] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           aria-label="Previous slide"
         >
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -105,13 +105,13 @@ export default function HeroCarousel({ posts }: HeroCarouselProps) {
           </svg>
         </button>
         
-        <div className="flex gap-2">
+        <div className="carousel-dots-container">
           {displayPosts.map((_, index) => (
             <button
               key={index}
               onClick={() => goToSlide(index)}
-              className={`w-3 h-3 rounded-full transition-colors ${
-                currentIndex === index ? 'bg-black' : 'bg-gray-300 hover:bg-[var(--hover-green)]'
+              className={`carousel-dot w-3 h-3 rounded-full transition-colors ${
+                currentIndex === index ? 'active bg-black' : 'inactive bg-gray-300 hover:bg-[var(--hover-green)]'
               }`}
               aria-label={`Go to slide ${index + 1}`}
             />
@@ -121,7 +121,7 @@ export default function HeroCarousel({ posts }: HeroCarouselProps) {
         <button
           onClick={goToNext}
           disabled={currentIndex === maxIndex}
-          className="p-2 rounded-full border-2 border-black hover:border-[var(--hover-green)] hover:text-[var(--hover-green)] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+          className="p-2 rounded-[2px] border-2 border-black hover:border-[var(--hover-green)] hover:text-[var(--hover-green)] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           aria-label="Next slide"
         >
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
