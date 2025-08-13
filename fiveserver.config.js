@@ -6,4 +6,4 @@ module.exports = {
     remoteLogs: "yellow", // enable remoteLogs and use the color yellow
     injectCss: true, // disable injecting css
     navigate: true, // enable auto-navigation
-  };
+};

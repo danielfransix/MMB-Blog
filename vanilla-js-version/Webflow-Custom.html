@@ -1,0 +1,342 @@
+<!-- ===== STEP 1: SYSTEM FONT OVERRIDE CSS ===== -->
+<style id="system-font-override">
+/* Force ALL text elements to use system fonts initially */
+* {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif !important;
+}
+
+/* Specific overrides for all your text classes */
+body,
+h1, h2, h3, h4, h5, h6,
+p, a, span, div, li, td, th, button, input, textarea, select,
+.display-heading-1-center,
+.hero_secondary-text,
+.heading-style-h2,
+.heading-style-h1,
+.body-text-16,
+.body-text-18,
+.body-text-45-bold,
+.text-size-regular,
+.text-size-regular-1,
+.heading-1,
+.heading-2, 
+.heading-3,
+.heading-4,
+.heading-5,
+.button-text,
+.nav-item,
+.text-align-center,
+.title-secondary-text,
+.text-color-pink,
+.text-color-qs-pink,
+.text-color-secondary,
+.faded-text,
+.medium,
+.text-weight-medium,
+.text-weight-semibold,
+.text---semibold,
+.checklist-title-1,
+.testimonial-text-block,
+.faq-question,
+.brix---display-3,
+.brix---text-300-medium,
+.white-text,
+.white-color {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif !important;
+}
+
+/* Prevent invisible text during font load */
+body {
+  font-display: swap;
+}
+
+/* Smooth transition when fonts swap */
+body.fonts-loaded * {
+  transition: font-family 0.15s ease-in-out;
+}
+</style>
+
+<!-- ===== STEP 2: GOOGLE FONTS LOADER WITH WEBFLOW COMPATIBILITY ===== -->
+<script>
+(function() {
+  // Configuration - Update these with your actual Google Fonts
+  const googleFonts = [
+    {
+      family: 'Clash Grotesk',
+      weights: ['200', '300', '400', '500', '600']
+    }
+    // Add your actual Google Fonts here
+  ];
+
+  // Function to disable existing Google Font links
+  function disableExistingGoogleFonts() {
+    // Find all Google Font links
+    const fontLinks = document.querySelectorAll('link[href*="fonts.googleapis.com"]');
+    fontLinks.forEach(link => {
+      // Disable them temporarily
+      link.disabled = true;
+      // Store reference for later
+      link.setAttribute('data-original-font', 'true');
+    });
+  }
+
+  // Function to load Google Fonts with Web Font Loader
+  function loadGoogleFonts() {
+    // First, disable any existing Google Font links
+    disableExistingGoogleFonts();
+
+    // Load Web Font Loader
+    const script = document.createElement('script');
+    script.src = 'https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js';
+    script.onload = function() {
+      // Configure font families
+      const families = googleFonts.map(font => {
+        const weights = font.weights ? ':' + font.weights.join(',') : '';
+        return font.family + weights;
+      });
+
+      // Load fonts
+      WebFont.load({
+        google: {
+          families: families
+        },
+        active: function() {
+          // All fonts loaded successfully
+          console.log('Google Fonts loaded successfully');
+          
+          // Add class to body
+          document.body.classList.add('fonts-loaded');
+          
+          // Re-enable original font links
+          const originalFontLinks = document.querySelectorAll('link[data-original-font]');
+          originalFontLinks.forEach(link => {
+            link.disabled = false;
+          });
+          
+          // Remove system font override after a brief moment
+          setTimeout(() => {
+            const systemFontStyle = document.getElementById('system-font-override');
+            if (systemFontStyle) {
+              systemFontStyle.remove();
+            }
+          }, 200);
+          
+          // Store in session
+          sessionStorage.setItem('fonts-loaded', 'true');
+        },
+        inactive: function() {
+          // Fonts failed to load
+          console.warn('Google Fonts failed to load, keeping system fonts');
+          // Still remove the override to allow any fallback fonts
+          setTimeout(() => {
+            const systemFontStyle = document.getElementById('system-font-override');
+            if (systemFontStyle) {
+              systemFontStyle.remove();
+            }
+          }, 1000);
+        },
+        timeout: 5000 // 5 second timeout
+      });
+    };
+    document.head.appendChild(script);
+  }
+
+  // Function to handle Webflow's font loading
+  function handleWebflowFonts() {
+    // Find Webflow's CSS file
+    const webflowCSS = document.querySelector('link[href*="webflow"]');
+    if (webflowCSS) {
+      // Monitor when it loads
+      if (webflowCSS.sheet) {
+        // Already loaded
+        extractAndLoadFonts();
+      } else {
+        // Wait for it to load
+        webflowCSS.addEventListener('load', extractAndLoadFonts);
+      }
+    }
+  }
+
+  // Function to extract font families from Webflow CSS
+  function extractAndLoadFonts() {
+    // If fonts were already loaded in this session, skip
+    if (sessionStorage.getItem('fonts-loaded') === 'true') {
+      document.body.classList.add('fonts-loaded');
+      setTimeout(() => {
+        const systemFontStyle = document.getElementById('system-font-override');
+        if (systemFontStyle) {
+          systemFontStyle.remove();
+        }
+      }, 100);
+      return;
+    }
+
+    // Look for Google Font links in the document
+    const googleFontLinks = document.querySelectorAll('link[href*="fonts.googleapis.com"]');
+    if (googleFontLinks.length > 0) {
+      // Extract font families from the links
+      const extractedFonts = [];
+      googleFontLinks.forEach(link => {
+        const url = new URL(link.href);
+        const familyParam = url.searchParams.get('family');
+        if (familyParam) {
+          // Parse families
+          const families = familyParam.split('|');
+          families.forEach(family => {
+            const [name, weights] = family.split(':');
+            extractedFonts.push({
+              family: name.replace(/\+/g, ' '),
+              weights: weights ? weights.split(',') : ['400']
+            });
+          });
+        }
+      });
+
+      // Update configuration if we found fonts
+      if (extractedFonts.length > 0) {
+        googleFonts.length = 0;
+        googleFonts.push(...extractedFonts);
+      }
+    }
+
+    // Load the fonts
+    loadGoogleFonts();
+  }
+
+  // Preconnect to Google Fonts for faster loading
+  function addPreconnects() {
+    ['https://fonts.googleapis.com', 'https://fonts.gstatic.com'].forEach(url => {
+      const link = document.createElement('link');
+      link.rel = 'preconnect';
+      link.href = url;
+      link.crossOrigin = '';
+      document.head.appendChild(link);
+    });
+  }
+
+  // Initialize
+  function init() {
+    // Add preconnects immediately
+    addPreconnects();
+
+    // Handle Webflow fonts
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', handleWebflowFonts);
+    } else {
+      handleWebflowFonts();
+    }
+
+    // Fallback: Load fonts after a delay if nothing else works
+    setTimeout(() => {
+      if (!document.body.classList.contains('fonts-loaded')) {
+        loadGoogleFonts();
+      }
+    }, 1000);
+  }
+
+  // Start the process
+  init();
+})();
+</script>
+
+<!-- ===== STEP 3: FONT REPLACEMENT CSS ===== -->
+<style>
+/* After fonts are loaded, apply the correct font families */
+body.fonts-loaded {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+}
+
+/* Headings - adjust based on your actual font usage */
+body.fonts-loaded h1,
+body.fonts-loaded h2,
+body.fonts-loaded h3,
+body.fonts-loaded h4,
+body.fonts-loaded h5,
+body.fonts-loaded h6,
+body.fonts-loaded .display-heading-1-center,
+body.fonts-loaded .heading-style-h1,
+body.fonts-loaded .heading-style-h2,
+body.fonts-loaded .heading-1,
+body.fonts-loaded .heading-2,
+body.fonts-loaded .heading-3,
+body.fonts-loaded .heading-4,
+body.fonts-loaded .heading-5,
+body.fonts-loaded .body-text-45-bold {
+  font-family: 'Plus Jakarta Sans', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif !important;
+}
+
+/* Body text and UI elements */
+body.fonts-loaded p,
+body.fonts-loaded a,
+body.fonts-loaded span,
+body.fonts-loaded div,
+body.fonts-loaded li,
+body.fonts-loaded td,
+body.fonts-loaded th,
+body.fonts-loaded button,
+body.fonts-loaded .body-text-16,
+body.fonts-loaded .body-text-18,
+body.fonts-loaded .text-size-regular,
+body.fonts-loaded .text-size-regular-1,
+body.fonts-loaded .nav-item,
+body.fonts-loaded .button-text,
+body.fonts-loaded .hero_secondary-text,
+body.fonts-loaded .title-secondary-text {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif !important;
+}
+
+/* Preserve font weights */
+body.fonts-loaded .medium,
+body.fonts-loaded .text-weight-medium {
+  font-weight: 500 !important;
+}
+
+body.fonts-loaded .text-weight-semibold,
+body.fonts-loaded .text---semibold {
+  font-weight: 600 !important;
+}
+
+body.fonts-loaded h1,
+body.fonts-loaded h2,
+body.fonts-loaded h3,
+body.fonts-loaded .heading-1,
+body.fonts-loaded .heading-2,
+body.fonts-loaded .heading-3 {
+  font-weight: 700 !important;
+}
+</style>
+
+<!-- ===== STEP 4: PERFORMANCE MONITORING ===== -->
+<script>
+// Monitor font loading performance
+if ('PerformanceObserver' in window) {
+  const observer = new PerformanceObserver((list) => {
+    for (const entry of list.getEntries()) {
+      if (entry.name.includes('fonts.googleapis.com') || entry.name.includes('fonts.gstatic.com')) {
+        console.log(`Font resource loaded: ${entry.name} - Duration: ${entry.duration}ms`);
+      }
+    }
+  });
+  observer.observe({ entryTypes: ['resource'] });
+}
+
+// Log when fonts are applied
+document.addEventListener('DOMContentLoaded', function() {
+  const startTime = performance.now();
+  
+  // Check when fonts-loaded class is added
+  const observer = new MutationObserver((mutations) => {
+    mutations.forEach((mutation) => {
+      if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
+        if (document.body.classList.contains('fonts-loaded')) {
+          const loadTime = performance.now() - startTime;
+          console.log(`Fonts loaded and applied in ${loadTime.toFixed(2)}ms`);
+          observer.disconnect();
+        }
+      }
+    });
+  });
+  
+  observer.observe(document.body, { attributes: true });
+});
+</script>

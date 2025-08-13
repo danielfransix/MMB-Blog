@@ -1,0 +1,20 @@
+{
+    "piny.project_settings": {
+        "open-pages": [
+            "index.html",
+            "pinyfakepage.html"
+        ],
+        "component-settings": {
+            "next-js-version/src/app/tailwind-test/page.tsx:::Temp": {
+                "route": "/tailwind-test"
+            }
+        },
+        "app-routes": {
+            "routes": [
+                "/",
+                "/tailwind-test"
+            ],
+            "current_route": "/tailwind-test"
+        }
+    }
+}
