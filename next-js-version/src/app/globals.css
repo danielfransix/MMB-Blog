@@ -259,7 +259,7 @@
   }
 
   .about-page-header {
-    @apply max-w-4xl mx-auto flex flex-col justify-center mb-6;
+    @apply max-w-4xl flex flex-col mb-6 max-w-4xl;
   }
 
   .contact-form-header {
@@ -267,7 +267,7 @@
 }
 
 .contact-form-master-container {
-  @apply flex flex-col gap-4 max-w-4xl mx-auto;
+  @apply flex flex-col gap-4 w-full;
 }
   
   .page-view-all-button {
@@ -1005,5 +1005,14 @@
   /* Search Overlay Updates */
   .search-submit-button {
     @apply bg-transparent border-none cursor-pointer p-0 flex items-center justify-center;
+  }
+
+  /* Custom Container Classes */
+  .content-container-wide {
+    @apply max-w-4xl w-full mx-auto;
+  }
+
+  .page-section-bg-gray {
+    @apply w-full py-20 bg-gray-50;
   }
 }

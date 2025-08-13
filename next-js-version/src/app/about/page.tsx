@@ -8,10 +8,10 @@ export default function About() {
       <section className="page-section-container">
         <div className="page-content-wrapper">
           <div className="page-content-inner">
-            <div className="about-page-header">
-              <h1 className="page-title-large text-center">About MakeMeBeautiful</h1>
-            </div>
-            <div className="max-w-4xl mx-auto">
+            <div className="content-container-wide">
+              <div className="about-page-header">
+                <h1 className="page-title-large">About MakeMeBeautiful</h1>
+              </div>
               <div className="flex flex-col items-start gap-2">
                 <div className="w-full">
                   <p className="text-gray-600 leading-relaxed mb-4">
@@ -33,9 +33,13 @@ export default function About() {
       </section>
 
       {/* Contact Form Section */}
-      <section className="page-section-container bg-gray-50">
+      <section className="page-section-bg-gray">
         <div className="page-content-wrapper">
-          <ContactForm />
+          <div className="page-content-inner">
+            <div className="content-container-wide">
+              <ContactForm />
+            </div>
+          </div>
         </div>
       </section>
     </div>
