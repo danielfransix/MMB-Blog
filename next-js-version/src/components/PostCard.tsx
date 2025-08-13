@@ -12,13 +12,13 @@ export default function PostCard({ title, href, imageSrc, publishedDate, dateTim
   return (
     <article className="post-card-article group">
       <a href={href} className="post-card-link">
-        <div className="post-card-image-container group-hover:border-[var(--hover-green)]">
+        <div className="post-card-image-container group-hover:border-[var(--hover-green)] flex items-start justify-center">
           <Image
             src={imageSrc}
             alt="Blog post image"
             width={400}
             height={200}
-            className="post-card-image"
+            className="post-card-image rounded-[2px] object-top"
           />
         </div>
         <div className="post-card-content">

@@ -10,6 +10,14 @@ export interface PostData {
   description?: string; // Optional for hero posts
   content?: string; // Full blog post content
   author?: string; // Author name
+  carouselImages?: string[]; // Images for the carousel
+  showCarousel?: boolean; // Toggle to show/hide carousel
+  textBlockOne?: string; // Text block after the first image
+  textBlockTwo?: string; // Text block between second image and carousel
+  textBlockThree?: string; // Text block after the carousel
+  showTextBlockOne?: boolean; // Toggle to show/hide first text block
+  showTextBlockTwo?: boolean; // Toggle to show/hide second text block
+  showTextBlockThree?: boolean; // Toggle to show/hide third text block
 }
 
 export const heroPostsData: PostData[] = [
@@ -24,7 +32,19 @@ export const heroPostsData: PostData[] = [
     href: "/posts/featured-hero-post",
     description: 'Lorem ipsum "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."',
     author: "Daniel Fransix",
-    content: `<p>Welcome to this comprehensive guide on modern technology trends. In this post, we'll explore the latest developments that are shaping our digital future.</p><p>Technology continues to evolve at an unprecedented pace, bringing new opportunities and challenges. From artificial intelligence to quantum computing, the landscape is constantly shifting.</p><p>One of the most significant trends we're seeing is the integration of AI into everyday applications. This isn't just about chatbots or recommendation systems anymore – we're talking about fundamental changes in how we interact with technology.</p><p>Another area of rapid development is cloud computing and edge computing. These technologies are enabling new possibilities for scalability and performance that were unimaginable just a few years ago.</p>`
+    content: `<p>Welcome to this comprehensive guide on modern technology trends. In this post, we'll explore the latest developments that are shaping our digital future.</p><p>Technology continues to evolve at an unprecedented pace, bringing new opportunities and challenges. From artificial intelligence to quantum computing, the landscape is constantly shifting.</p><p>One of the most significant trends we're seeing is the integration of AI into everyday applications. This isn't just about chatbots or recommendation systems anymore – we're talking about fundamental changes in how we interact with technology.</p><p>Another area of rapid development is cloud computing and edge computing. These technologies are enabling new possibilities for scalability and performance that were unimaginable just a few years ago.</p>`,
+    carouselImages: [
+      "/img/02ccd2a0b0f833a4225a9509b2a9761a083adf88.jpg",
+      "/img/02ccd2a0b0f833a4225a9509b2a9761a083adf88.jpg",
+      "/img/02ccd2a0b0f833a4225a9509b2a9761a083adf88.jpg"
+    ],
+    showCarousel: true,
+    textBlockOne: "This is the first text block that appears after the featured image. It provides additional context and insights about the topic being discussed in this comprehensive guide.",
+    textBlockTwo: "Here's the second text block that appears between the full-width image and the carousel. This section can contain more detailed information or analysis related to the main topic.",
+    textBlockThree: "This is the third and final text block that appears after the image carousel. It serves as a conclusion or summary of the key points discussed throughout the post.",
+    showTextBlockOne: true,
+    showTextBlockTwo: true,
+    showTextBlockThree: true
   },
   {
     id: 2,

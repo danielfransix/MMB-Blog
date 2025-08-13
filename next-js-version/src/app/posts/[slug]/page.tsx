@@ -7,7 +7,9 @@ import AuthorInfo from "../../../components/AuthorInfo";
 import { useState, use } from "react";
 import PostCard from "../../../components/PostCard";
 import Comment from "../../../components/Comment";
+import CommentForm from "../../../components/CommentForm";
 import NewsletterSubscription from "../../../components/NewsletterSubscription";
+import BlogImageCarousel from "../../../components/BlogImageCarousel";
 
 interface BlogPostPageProps {
   params: Promise<{
@@ -17,8 +19,6 @@ interface BlogPostPageProps {
 
 export default function BlogPostPage({ params }: BlogPostPageProps) {
   const [email, setEmail] = useState("");
-  const [comment, setComment] = useState("");
-  const [name, setName] = useState("");
   const [isSubscribed, setIsSubscribed] = useState(false);
 
   // Unwrap the params Promise
@@ -41,11 +41,10 @@ export default function BlogPostPage({ params }: BlogPostPageProps) {
     setEmail("");
   };
 
-  const handleComment = (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleComment = (data: { name: string; email: string; comment: string }) => {
     // Handle comment submission
-    setComment("");
-    setName("");
+    console.log('Comment submitted:', data);
+    // Add your comment submission logic here
   };
 
   return (
@@ -73,9 +72,16 @@ export default function BlogPostPage({ params }: BlogPostPageProps) {
             alt={post.title}
             width={800}
             height={400}
-            className="blog-post-featured-image"
+            className="blog-post-featured-image rounded-[2px]"
           />
         </div>
+
+        {/* Text Block One */}
+        {post.showTextBlockOne && post.textBlockOne && (
+          <div className="blog-post-text-block">
+            <p className="blog-post-paragraph">{post.textBlockOne}</p>
+          </div>
+        )}
 
         {/* Content */}
         <div>
@@ -107,6 +113,38 @@ export default function BlogPostPage({ params }: BlogPostPageProps) {
               </p>
             </>
           )}
+
+          {/* Full-width image */}
+          <div className="blog-post-full-width-image">
+            <Image
+              src={post.imageSrc}
+              alt="Full width content image"
+              width={1200}
+              height={600}
+              className="w-full h-auto object-cover rounded-[2px]"
+            />
+          </div>
+
+          {/* Text Block Two */}
+          {post.showTextBlockTwo && post.textBlockTwo && (
+            <div className="blog-post-text-block">
+              <p className="blog-post-paragraph">{post.textBlockTwo}</p>
+            </div>
+          )}
+
+          {/* Image Carousel */}
+          {post.showCarousel && (
+            <div className="blog-post-image-carousel">
+              <BlogImageCarousel images={post.carouselImages} />
+            </div>
+          )}
+
+          {/* Text Block Three */}
+          {post.showTextBlockThree && post.textBlockThree && (
+            <div className="blog-post-text-block">
+              <p className="blog-post-paragraph">{post.textBlockThree}</p>
+            </div>
+          )}
         </div>
 
         {/* Newsletter Subscription */}
@@ -116,76 +154,7 @@ export default function BlogPostPage({ params }: BlogPostPageProps) {
         <div className="comments-section">
           <h3 className="comments-title">Leave a Reply</h3>
           
-          <form onSubmit={handleComment} className="comment-form flex flex-col gap-1">
-            <div className="flex flex-col sm:flex-row gap-1">
-              <input
-                type="text"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                placeholder="Name"
-                required
-                className="flex-1 px-4 py-2 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-green-500 bg-white hover:border-green-500 transition-colors rounded-sm"
-              />
-              <input
-                type="email"
-                placeholder="Email"
-                className="flex-1 px-4 py-2 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-green-500 bg-white hover:border-green-500 transition-colors rounded-sm"
-              />
-            </div>
-            
-            <div 
-              className="flex items-start gap-1 w-full border border-gray-300 focus-within:ring-2 focus-within:ring-green-500 hover:border-green-500 transition-colors rounded-sm"
-              onClick={(e) => {
-                const textarea = e.currentTarget.querySelector('textarea');
-                if (textarea && e.target !== e.currentTarget.querySelector('.image-upload')) {
-                  textarea.focus();
-                }
-              }}
-            >
-              <div 
-                className="image-upload w-12 h-12 border-2 border-black hover:border-green-500 transition-colors cursor-pointer flex items-center justify-center m-2 flex-shrink-0 text-black hover:text-green-500 rounded-sm bg-transparent"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  // Handle image upload
-                  console.log('Image upload clicked');
-                }}
-              >
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M16 5h6"/>
-                  <path d="M19 2v6"/>
-                  <path d="M21 11.5V19a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h7.5"/>
-                  <path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/>
-                  <circle cx="9" cy="9" r="2"/>
-                </svg>
-              </div>
-              <textarea
-                value={comment}
-                onChange={(e) => setComment(e.target.value)}
-                placeholder="Write your comment here..."
-                required
-                rows={4}
-                className="flex-1 px-4 py-2 focus:outline-none resize-none border-none"
-              />
-            </div>
-            
-            <div className="flex flex-row items-center gap-1 mb-4 flex-wrap">
-              <input
-                type="checkbox"
-                id="save-info"
-                className="rounded"
-              />
-              <label htmlFor="save-info" className="text-sm text-gray-600">
-                Save my name and email in this browser for the next time I comment.
-              </label>
-            </div>
-            
-            <button
-              type="submit"
-              className="px-6 py-2 bg-black text-white hover:bg-green-500 hover:text-black transition-colors rounded-sm"
-            >
-              Post Comment
-            </button>
-          </form>
+          <CommentForm onSubmit={handleComment} />
 
           {/* Comments */}
           <div className="comments-list">

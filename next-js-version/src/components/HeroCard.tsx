@@ -19,7 +19,7 @@ export default function HeroCard({ title, href, imageSrc, category, publishedDat
           alt="Featured blog post image"
           width={800}
           height={600}
-          className="hero-card-image"
+          className="hero-card-image rounded-[2px]"
           priority
         />
       </div>
@@ -28,11 +28,11 @@ export default function HeroCard({ title, href, imageSrc, category, publishedDat
           {title}
         </h2>
         <div className="hero-card-details">
-          <div className="hero-card-meta-container">
+          <div className="hero-card-meta-container items-start gap-3 md:gap-2">
             <div className="hero-card-meta-info">
               <p className="hero-card-category"><span className="opacity-60">Category:</span> {category}</p>
             </div>
-            <div className="hero-card-separator"></div>
+            <div className="hero-card-separator hidden md:block"></div>
             <p className="hero-card-date">
               <span className="opacity-60">Published on</span> <time dateTime={dateTime}>{publishedDate}</time>
             </p>

@@ -41,7 +41,7 @@ export function Home() {
               <div className="home-nav-main">
                 <div className="home-brand-container">
                   <p className="home-brand-text">MakeMeBeautiful</p>
-                  <div className="home-brand-dot" />
+                  <div className="home-brand-dot hidden md:block" />
                 </div>
                 <div className="home-nav-links">
                   <NavigationMenuItem>
@@ -75,7 +75,7 @@ export function Home() {
         <div>
           <h2 className="home-hero-title">This is a very nice blogpost</h2>
         </div>
-        <div className="home-meta-container">
+        <div className="home-meta-container flex-col items-start gap-3 md:flex-row md:items-center md:gap-2">
           <div className="home-tag-container">
             <Icon icon="mingcute:tag-line" />
             Tag

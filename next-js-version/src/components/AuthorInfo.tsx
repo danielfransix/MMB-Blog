@@ -24,7 +24,7 @@ export default function AuthorInfo({ authorName, showDate = true, publishedDate,
             alt={author.name}
             width={48}
             height={48}
-            className="author-info-image"
+            className="author-info-image rounded-[2px]"
           />
         ) : (
           <div className="author-info-placeholder">

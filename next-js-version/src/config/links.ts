@@ -13,10 +13,10 @@ export const LINKS = {
   // Post card links are now managed in ../data/posts.ts
   
   // Navigation links
-  NAV_HOME: 'https://www.google.com',
-  NAV_ABOUT: 'https://www.google.com',
-  NAV_BLOG: 'https://www.google.com',
-  NAV_CONTACT: 'https://www.google.com',
+  NAV_HOME: '/',
+  NAV_ABOUT: '/about',
+  NAV_BLOG: '/posts',
+  NAV_CONTACT: '/contact',
   
   // Social media links
   SOCIAL_FACEBOOK: 'https://www.google.com',
@@ -25,7 +25,7 @@ export const LINKS = {
   SOCIAL_LINKEDIN: 'https://www.google.com',
   
   // Other interactive elements
-  LOGO: 'https://www.google.com',
+  LOGO: '/',
   SEARCH: 'https://www.google.com',
   NEWSLETTER_SIGNUP: 'https://www.google.com'
 };
