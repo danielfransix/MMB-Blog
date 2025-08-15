@@ -16,5 +16,6 @@
             ],
             "current_route": "/tailwind-test"
         }
-    }
+    },
+    "pinegrow.enabled": false
 }

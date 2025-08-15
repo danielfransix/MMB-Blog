@@ -259,7 +259,7 @@
   }
 
   .about-page-header {
-    @apply max-w-4xl flex flex-col mb-6 max-w-4xl;
+    @apply max-w-4xl flex flex-col mb-6;
   }
 
   .contact-form-header {
@@ -1014,5 +1014,9 @@
 
   .page-section-bg-gray {
     @apply w-full py-20 bg-gray-50;
+  }
+
+  .contact-grid-layout {
+    @apply pt-24 content-start min-h-screen grid grid-cols-1 lg:grid-cols-2 gap-12 items-start;
   }
 }
