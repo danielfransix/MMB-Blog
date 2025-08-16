@@ -7,7 +7,7 @@ const POSTS_PER_PAGE = 12;
 
 export default function AllPosts() {
   const [currentPage, setCurrentPage] = useState(1);
-  
+
   const totalPages = Math.ceil(postsData.length / POSTS_PER_PAGE);
   const startIndex = (currentPage - 1) * POSTS_PER_PAGE;
   const endIndex = startIndex + POSTS_PER_PAGE;
@@ -42,7 +42,6 @@ export default function AllPosts() {
                 Page {currentPage} of {totalPages}
               </span>
             </div>
-            
             <div className="page-posts-grid-extended">
               {currentPosts.map((post) => (
                 <PostCard
@@ -66,23 +65,22 @@ export default function AllPosts() {
                 >
                   Previous
                 </button>
-                
+
                 <div className="pagination-numbers-container">
                   {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
                     <button
                       key={page}
                       onClick={() => goToPage(page)}
-                      className={`pagination-number-button ${
-                        currentPage === page
+                      className={`pagination-number-button ${currentPage === page
                           ? 'pagination-number-active'
                           : 'pagination-number-inactive'
-                      }`}
+                        }`}
                     >
                       {page}
                     </button>
                   ))}
                 </div>
-                
+
                 <button
                   onClick={goToNext}
                   disabled={currentPage === totalPages}
