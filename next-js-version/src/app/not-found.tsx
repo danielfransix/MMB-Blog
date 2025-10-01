@@ -12,7 +12,7 @@ export default function NotFound() {
                 {/* 404 Illustration */}
                 <div className="mb-8">
                   <Image
-                    src="/img/error_404.svg"
+                    src="/svgs/error_404.svg"
                     alt="404 Error Illustration"
                     width={400}
                     height={300}
@@ -27,7 +27,7 @@ export default function NotFound() {
                     Page Not Found
                   </h1>
                   <p className="text-gray-600 leading-relaxed max-w-md mx-auto">
-                    Sorry, we couldn't find the page you're looking for. 
+                    Sorry, we couldn&apos;t find the page you&apos;re looking for. 
                     The page might have been moved, deleted, or the URL might be incorrect.
                   </p>
                 </div>

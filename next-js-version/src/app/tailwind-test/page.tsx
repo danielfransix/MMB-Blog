@@ -1,10 +1,12 @@
+import Image from "next/image";
+
 export default function TailwindTest() {
   return (
     <div className="test-page-container">
       <div className="test-page-wrapper">
         <div className="test-content-card">
-          <img src="/img/logo.svg" className="test-logo-light" alt="Tailwind Play" />
-          <img src="/img/logo-dark.svg" className="test-logo-dark" alt="Tailwind Play" />
+          <Image src="/svgs/logo.svg" className="test-logo-light" alt="Tailwind Play" width={200} height={50} />
+          <Image src="/svgs/logo-dark.svg" className="test-logo-dark" alt="Tailwind Play" width={200} height={50} />
           <div className="test-content-section">
             <p className="test-intro-text">An advanced online playground for Tailwind CSS, including support for things like:</p>
             <ul className="test-feature-list">

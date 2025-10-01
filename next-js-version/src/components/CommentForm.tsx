@@ -49,7 +49,7 @@ export default function CommentForm({
       } else {
         setFormStatus('error');
       }
-    } catch (error) {
+    } catch {
       setFormStatus('error');
     }
   };
@@ -67,7 +67,7 @@ export default function CommentForm({
       <div className="comment-form flex flex-col gap-4">
         <div className="flex flex-col items-center justify-center space-y-4 py-6">
           <Image
-            src="/img/success.svg"
+            src="/svgs/success.svg"
             alt="Success"
             width={60}
             height={60}
@@ -94,7 +94,7 @@ export default function CommentForm({
       <div className="comment-form flex flex-col gap-4">
         <div className="flex flex-col items-center justify-center space-y-4 py-6">
           <Image
-            src="/img/failure.svg"
+            src="/svgs/failure.svg"
             alt="Error"
             width={60}
             height={60}

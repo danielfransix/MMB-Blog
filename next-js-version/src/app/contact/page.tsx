@@ -59,7 +59,7 @@ export default function Contact() {
               {/* Right Column - Illustration */}
               <div className="flex justify-center items-center">
                 <Image
-                  src="/Illustration - No Messages - Empty Inbox.svg"
+                  src="/svgs/Illustration - No Messages - Empty Inbox.svg"
                   alt="Contact us illustration"
                   width={400}
                   height={400}

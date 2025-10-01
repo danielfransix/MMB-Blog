@@ -56,7 +56,7 @@ export default function ContactForm({
       } else {
         setFormStatus('error');
       }
-    } catch (error) {
+    } catch {
       setFormStatus('error');
     }
   };
@@ -81,7 +81,7 @@ export default function ContactForm({
         
         <div className="flex flex-col items-center justify-center space-y-6 py-8">
           <Image
-            src="/img/success.svg"
+            src="/svgs/success.svg"
             alt="Success"
             width={80}
             height={80}
@@ -89,7 +89,7 @@ export default function ContactForm({
           />
           <div className="text-center space-y-2">
             <h3 className="text-xl font-semibold text-green-600">Message Sent Successfully!</h3>
-            <p className="text-gray-600">Thank you for reaching out. We'll get back to you soon.</p>
+            <p className="text-gray-600">Thank you for reaching out. We&apos;ll get back to you soon.</p>
           </div>
           <button
             onClick={resetForm}
@@ -112,7 +112,7 @@ export default function ContactForm({
         
         <div className="flex flex-col items-center justify-center space-y-6 py-8">
           <Image
-            src="/img/failure.svg"
+            src="/svgs/failure.svg"
             alt="Error"
             width={80}
             height={80}
