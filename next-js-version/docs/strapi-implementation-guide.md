@@ -1,6 +1,6 @@
-# Complete Guide: Implementing Strapi CMS with Next.js Blog
+# Complete Guide: Implementing Strapi 5 CMS with Next.js Blog
 
-This comprehensive guide will walk you through integrating Strapi CMS with your existing Next.js blog, transforming it from a static blog to a dynamic, content-managed website.
+This comprehensive guide will walk you through integrating Strapi 5 CMS with your existing Next.js blog, transforming it from a static blog to a dynamic, content-managed website.
 
 ## Table of Contents
 
@@ -32,12 +32,12 @@ Strapi is an open-source headless Content Management System (CMS) that provides 
 
 Before starting, ensure you have:
 
-- **Node.js**: Active LTS or Maintenance LTS versions (currently v20 and v22)
+- **Node.js**: Node.js 18.x or higher (Node.js 20.x recommended for Strapi 5)
 - **Package Manager**: npm (v6+), yarn, or pnpm
-- **Python**: Required if using SQLite database
+- **Database**: PostgreSQL, MySQL, or better-sqlite3 (SQLite3 is no longer supported in Strapi 5)
 - **Git**: For version control
 - **GitHub Account**: For deployment to Strapi Cloud
-- **Existing Next.js Blog**: Your current blog project
+- **Existing Next.js Blog**: Your current blog project with TypeScript support recommended
 
 ## Setting Up Strapi Backend
 
@@ -48,18 +48,62 @@ Before starting, ensure you have:
    cd c:\Users\SURFACE\OneDrive\Documents\GitHub\MMB-Blog
    ```
 
-2. Create a new Strapi project:
+2. Create a new Strapi 5 project:
    ```bash
-   npx create-strapi-app@latest strapi-backend --quickstart
+   npx create-strapi-app@latest strapi-backend --typescript --quickstart
    ```
 
 3. This will:
-   - Create a new `strapi-backend` folder
+   - Create a new `strapi-backend` folder with TypeScript support
    - Install all dependencies
-   - Set up SQLite database (default)
+   - Set up better-sqlite3 database (default)
+   - Use Vite bundler for faster builds
    - Start the development server
 
 4. After installation, Strapi will automatically open in your browser at `http://localhost:1337/admin`
+
+### Step 1.5: Database Configuration
+
+Strapi 5 requires specific database configurations:
+
+**Supported Databases:**
+- PostgreSQL (recommended for production)
+- MySQL with mysql2 driver
+- better-sqlite3 (development only)
+
+```javascript
+// config/database.js (PostgreSQL example)
+module.exports = ({ env }) => ({
+  connection: {
+    client: 'postgres',
+    connection: {
+      host: env('DATABASE_HOST', '127.0.0.1'),
+      port: env.int('DATABASE_PORT', 5432),
+      database: env('DATABASE_NAME', 'strapi'),
+      user: env('DATABASE_USERNAME', 'strapi'),
+      password: env('DATABASE_PASSWORD', 'strapi'),
+      ssl: env.bool('DATABASE_SSL', false),
+    },
+  },
+});
+```
+
+**For MySQL (using mysql2):**
+```javascript
+// config/database.js
+module.exports = ({ env }) => ({
+  connection: {
+    client: 'mysql2',
+    connection: {
+      host: env('DATABASE_HOST', '127.0.0.1'),
+      port: env.int('DATABASE_PORT', 3306),
+      database: env('DATABASE_NAME', 'strapi'),
+      user: env('DATABASE_USERNAME', 'strapi'),
+      password: env('DATABASE_PASSWORD', 'strapi'),
+    },
+  },
+});
+```
 
 ### Step 2: Create Admin User
 
@@ -158,6 +202,8 @@ Before starting, ensure you have:
 
 ## Setting Up API Permissions
 
+Strapi 5 maintains the same permissions system with both Role-Based Access Control (RBAC) for admin users and Users & Permissions plugin for end-users. <mcreference link="https://docs.strapi.io/cms/features/users-permissions" index="1">1</mcreference> <mcreference link="https://docs.strapi.io/cms/features/rbac" index="3">3</mcreference>
+
 ### Step 7: Configure Public Permissions
 
 1. Go to **Settings** → **Users & Permissions Plugin** → **Roles**
@@ -165,30 +211,48 @@ Before starting, ensure you have:
 3. Under **Permissions**, expand each content type and enable:
 
    **Author:**
-   - `find`
-   - `findOne`
+   - `find` (allows fetching all authors)
+   - `findOne` (allows fetching single author by documentId)
 
    **Category:**
-   - `find`
-   - `findOne`
+   - `find` (allows fetching all categories)
+   - `findOne` (allows fetching single category by documentId)
 
    **Post:**
-   - `find`
-   - `findOne`
+   - `find` (allows fetching all posts)
+   - `findOne` (allows fetching single post by documentId)
 
    **Comment:**
-   - `find`
-   - `create` (for submitting new comments)
+   - `find` (allows fetching comments)
+   - `create` (allows submitting new comments)
 
 4. Click **Save**
+
+**Note for Strapi 5:** The permissions system works with both `id` and `documentId` parameters. The `findOne` permission covers both `/api/posts/:id` and `/api/posts/:documentId` endpoints.
 
 ### Step 8: Configure Authenticated Permissions (Optional)
 
 If you plan to have user authentication:
 
 1. Click on **Authenticated** role
-2. Enable additional permissions as needed
+2. Enable additional permissions as needed:
+   - `update` and `delete` for user-generated content
+   - Additional content type permissions
 3. Save changes
+
+### Advanced Permissions Configuration
+
+For more granular control, you can also configure:
+
+**Admin Panel Access (RBAC):** <mcreference link="https://strapi.io/blog/permissions-in-strapi" index="2">2</mcreference>
+- Go to **Settings** → **Administration Panel** → **Roles**
+- Create custom admin roles with specific permissions
+- Assign roles to admin users
+
+**API Token Permissions:**
+- Go to **Settings** → **API Tokens**
+- Create tokens with specific permissions for external integrations
+- Use tokens for server-to-server communication
 
 ## Modifying Next.js Frontend
 
@@ -225,7 +289,7 @@ STRAPI_API_TOKEN=your-api-token-here
 
 ### Step 11: Create API Helper Files
 
-Create `src/lib/strapi.ts`:
+Create `src/lib/strapi.ts` for Strapi 5 with flattened response format:
 
 ```typescript
 interface StrapiResponse<T> {
@@ -248,7 +312,7 @@ interface StrapiSingleResponse<T> {
 const STRAPI_URL = process.env.NEXT_PUBLIC_STRAPI_URL || 'http://localhost:1337';
 const API_TOKEN = process.env.STRAPI_API_TOKEN;
 
-// Generic fetch function
+// Generic fetch function for Strapi 5
 async function fetchAPI<T>(
   path: string,
   options: RequestInit = {}
@@ -273,7 +337,7 @@ async function fetchAPI<T>(
   return response.json();
 }
 
-// Fetch all posts with relations
+// Fetch all posts with relations (Strapi 5)
 export async function getPosts(params?: {
   page?: number;
   pageSize?: number;
@@ -302,7 +366,26 @@ export async function getPosts(params?: {
   return fetchAPI<StrapiResponse<any[]>>(`/posts?${searchParams.toString()}`);
 }
 
-// Fetch single post by slug
+// Fetch single post by documentId (Strapi 5)
+export async function getPostByDocumentId(documentId: string): Promise<StrapiSingleResponse<any> | null> {
+  const searchParams = new URLSearchParams();
+  
+  // Populate all relations
+  searchParams.append('populate[author]', '*');
+  searchParams.append('populate[category]', '*');
+  searchParams.append('populate[featuredImage]', '*');
+  searchParams.append('populate[carouselImages]', '*');
+  
+  try {
+    const response = await fetchAPI<StrapiSingleResponse<any>>(`/posts/${documentId}?${searchParams.toString()}`);
+    return response;
+  } catch (error) {
+    console.error('Error fetching post:', error);
+    return null;
+  }
+}
+
+// Fetch single post by slug (Strapi 5)
 export async function getPostBySlug(slug: string): Promise<StrapiSingleResponse<any> | null> {
   const searchParams = new URLSearchParams();
   
@@ -332,7 +415,7 @@ export async function getPostBySlug(slug: string): Promise<StrapiSingleResponse<
   }
 }
 
-// Fetch all authors
+// Fetch all authors (Strapi 5)
 export async function getAuthors(): Promise<StrapiResponse<any[]>> {
   const searchParams = new URLSearchParams();
   searchParams.append('populate[picture]', '*');
@@ -340,7 +423,7 @@ export async function getAuthors(): Promise<StrapiResponse<any[]>> {
   return fetchAPI<StrapiResponse<any[]>>(`/authors?${searchParams.toString()}`);
 }
 
-// Fetch author by slug
+// Fetch author by slug (Strapi 5)
 export async function getAuthorBySlug(slug: string): Promise<StrapiSingleResponse<any> | null> {
   const searchParams = new URLSearchParams();
   searchParams.append('populate[picture]', '*');
@@ -363,17 +446,17 @@ export async function getAuthorBySlug(slug: string): Promise<StrapiSingleRespons
   }
 }
 
-// Fetch all categories
+// Fetch all categories (Strapi 5)
 export async function getCategories(): Promise<StrapiResponse<any[]>> {
   return fetchAPI<StrapiResponse<any[]>>('/categories');
 }
 
-// Submit comment
+// Submit comment (Strapi 5 - using documentId)
 export async function submitComment(commentData: {
   name: string;
   email: string;
   content: string;
-  post: number;
+  post: string; // documentId instead of numeric id
 }): Promise<any> {
   return fetchAPI('/comments', {
     method: 'POST',
@@ -381,11 +464,26 @@ export async function submitComment(commentData: {
   });
 }
 
-// Helper function to get full URL for Strapi media
+// Helper function to get full URL for Strapi media (Strapi 5 flattened format)
 export function getStrapiMediaUrl(url: string): string {
   if (!url) return '';
   if (url.startsWith('http')) return url;
   return `${STRAPI_URL}${url}`;
+}
+
+// Optional: Add backward compatibility for gradual migration
+export async function fetchWithV4Compatibility(endpoint: string) {
+  try {
+    const response = await fetch(`${STRAPI_URL}${endpoint}`, {
+      headers: {
+        'Strapi-Response-Format': 'v4', // Use v4 format during migration
+      },
+    });
+    return await response.json();
+  } catch (error) {
+    console.error('Error fetching data:', error);
+    return null;
+  }
 }
 ```
 
@@ -394,109 +492,261 @@ export function getStrapiMediaUrl(url: string): string {
 Create `src/types/strapi.ts`:
 
 ```typescript
+// Strapi 5 flattened response format interfaces
 export interface StrapiMedia {
   id: number;
-  attributes: {
-    name: string;
-    alternativeText?: string;
-    caption?: string;
-    width: number;
-    height: number;
-    formats?: {
-      thumbnail?: { url: string };
-      small?: { url: string };
-      medium?: { url: string };
-      large?: { url: string };
-    };
-    hash: string;
-    ext: string;
-    mime: string;
-    size: number;
-    url: string;
-    previewUrl?: string;
-    provider: string;
-    provider_metadata?: any;
-    createdAt: string;
-    updatedAt: string;
+  documentId: string; // New in Strapi 5
+  name: string;
+  alternativeText?: string;
+  caption?: string;
+  width: number;
+  height: number;
+  formats?: {
+    thumbnail?: { url: string; width: number; height: number };
+    small?: { url: string; width: number; height: number };
+    medium?: { url: string; width: number; height: number };
+    large?: { url: string; width: number; height: number };
   };
+  hash: string;
+  ext: string;
+  mime: string;
+  size: number;
+  url: string;
+  previewUrl?: string;
+  provider: string;
+  provider_metadata?: any;
+  createdAt: string;
+  updatedAt: string;
+  publishedAt: string | null; // Can be null for draft content
+  locale: string; // New in Strapi 5
 }
 
 export interface StrapiAuthor {
   id: number;
-  attributes: {
-    name: string;
-    bio: string;
-    slug: string;
-    picture: {
-      data: StrapiMedia;
-    };
-    createdAt: string;
-    updatedAt: string;
-    publishedAt: string;
-  };
+  documentId: string; // New unique identifier in Strapi 5
+  name: string;
+  bio: string;
+  slug: string;
+  picture: StrapiMedia | null; // Flattened - no more nested data/attributes
+  createdAt: string;
+  updatedAt: string;
+  publishedAt: string | null;
+  locale: string;
 }
 
 export interface StrapiCategory {
   id: number;
-  attributes: {
-    name: string;
-    slug: string;
-    description?: string;
-    createdAt: string;
-    updatedAt: string;
-    publishedAt: string;
-  };
+  documentId: string; // New unique identifier in Strapi 5
+  name: string;
+  slug: string;
+  description?: string;
+  createdAt: string;
+  updatedAt: string;
+  publishedAt: string | null;
+  locale: string;
 }
 
 export interface StrapiPost {
   id: number;
-  attributes: {
-    title: string;
-    slug: string;
-    excerpt: string;
-    content: string;
-    publishedDate: string;
-    showCarousel: boolean;
-    showTextBlockOne: boolean;
-    showTextBlockTwo: boolean;
-    showTextBlockThree: boolean;
-    isFeatured: boolean;
-    textBlockOne?: string;
-    textBlockTwo?: string;
-    textBlockThree?: string;
-    featuredImage: {
-      data: StrapiMedia;
-    };
-    carouselImages?: {
-      data: StrapiMedia[];
-    };
-    author: {
-      data: StrapiAuthor;
-    };
-    category: {
-      data: StrapiCategory;
-    };
-    createdAt: string;
-    updatedAt: string;
-    publishedAt: string;
-  };
+  documentId: string; // New unique identifier in Strapi 5
+  title: string;
+  slug: string;
+  excerpt: string;
+  content: string;
+  publishedDate: string;
+  showCarousel: boolean;
+  showTextBlockOne: boolean;
+  showTextBlockTwo: boolean;
+  showTextBlockThree: boolean;
+  isFeatured: boolean;
+  textBlockOne?: string;
+  textBlockTwo?: string;
+  textBlockThree?: string;
+  featuredImage: StrapiMedia | null; // Flattened - no more nested structure
+  carouselImages?: StrapiMedia[]; // Flattened array
+  author: StrapiAuthor; // Flattened relation
+  category: StrapiCategory; // Flattened relation
+  createdAt: string;
+  updatedAt: string;
+  publishedAt: string | null; // Can be null for draft content
+  locale: string; // New in Strapi 5
 }
 
 export interface StrapiComment {
   id: number;
-  attributes: {
-    name: string;
-    email: string;
-    content: string;
-    isApproved: boolean;
-    post: {
-      data: StrapiPost;
-    };
-    createdAt: string;
-    updatedAt: string;
-    publishedAt: string;
+  documentId: string; // New unique identifier in Strapi 5
+  name: string;
+  email: string;
+  content: string;
+  isApproved: boolean;
+  post: {
+    documentId: string; // Use documentId for relations
+    title: string;
+    slug: string;
+  };
+  createdAt: string;
+  updatedAt: string;
+  publishedAt: string | null;
+  locale: string;
+}
+
+// Draft & Publish status types (enhanced in Strapi 5)
+export type PublicationStatus = 'draft' | 'published';
+
+// Strapi 5 Document Service types
+export interface DocumentServiceParams {
+  documentId?: string;
+  locale?: string;
+  status?: PublicationStatus;
+  fields?: string[];
+  populate?: any;
+  filters?: any;
+  sort?: string | string[];
+  pagination?: {
+    page?: number;
+    pageSize?: number;
+    start?: number;
+    limit?: number;
   };
 }
+```
+
+## Strapi 5 TypeScript Configuration
+
+Strapi 5 includes significant improvements to TypeScript support with a completely rewritten codebase in TypeScript.
+
+### Enhanced TypeScript Features
+
+**Key Improvements in Strapi 5:**
+- Complete codebase migration from JavaScript to TypeScript
+- Improved type system with clearer type names
+- Better namespace organization
+- Enhanced type safety for user-facing APIs
+- Vite bundler for faster TypeScript compilation
+
+### TypeScript Configuration Files
+
+Strapi 5 TypeScript projects include specific configuration files:
+
+```json
+// tsconfig.json (root)
+{
+  "extends": "@strapi/typescript-utils/tsconfigs/server",
+  "compilerOptions": {
+    "outDir": "./dist",
+    "rootDir": "./",
+    "allowJs": true, // For incremental migration
+    "checkJs": false
+  },
+  "include": [
+    "./",
+    "./**/*.ts",
+    "./**/*.js"
+  ],
+  "exclude": [
+    "node_modules/",
+    "build/",
+    "dist/",
+    ".cache/",
+    ".tmp/",
+    "src/admin/",
+    "**/*.test.ts",
+    "**/*.test.js"
+  ]
+}
+```
+
+```json
+// src/admin/tsconfig.json (admin panel)
+{
+  "extends": "@strapi/typescript-utils/tsconfigs/admin",
+  "include": [
+    "../plugins/**/admin/src/**/*",
+    "./"
+  ],
+  "exclude": [
+    "node_modules/",
+    "build/",
+    "dist/",
+    "**/*.test.ts",
+    "**/*.test.js"
+  ]
+}
+```
+
+### TypeScript Configuration for Strapi Features
+
+```typescript
+// config/typescript.ts
+export default {
+  // Enable TypeScript compilation
+  compile: true,
+  // Auto-generate types
+  autogenerate: true,
+  // Type generation options
+  generateTypes: {
+    // Generate types for content-types
+    contentTypes: true,
+    // Generate types for components
+    components: true,
+    // Output directory for generated types
+    outputDir: './types/generated',
+  },
+};
+```
+
+### Using Generated Types
+
+Strapi 5 can auto-generate TypeScript types for your content-types:
+
+```typescript
+// types/generated/contentTypes.ts (auto-generated)
+export interface Api {
+  'api::post.post': {
+    id: number;
+    documentId: string;
+    title: string;
+    slug: string;
+    content: string;
+    // ... other fields
+  };
+  'api::author.author': {
+    id: number;
+    documentId: string;
+    name: string;
+    bio: string;
+    // ... other fields
+  };
+}
+
+// Using generated types in your code
+import type { Api } from './types/generated/contentTypes';
+
+export async function getPost(documentId: string): Promise<Api['api::post.post'] | null> {
+  // Type-safe API calls
+  const response = await strapi.documents('api::post.post').findOne({
+    documentId,
+    populate: '*'
+  });
+  
+  return response;
+}
+```
+
+### Adding TypeScript to Existing Strapi Project
+
+If you have an existing Strapi project, you can add TypeScript support:
+
+```bash
+# Install TypeScript dependencies
+npm install typescript @strapi/typescript-utils
+
+# Add TypeScript configuration files
+# (create tsconfig.json files as shown above)
+
+# Rebuild admin panel with TypeScript support
+npm run build
+npm run develop
 ```
 
 ## Updating Components
@@ -859,6 +1109,58 @@ Test these URLs in your browser:
 
 Deploy your Next.js app to Vercel, Netlify, or your preferred platform with the updated environment variables.
 
+## Strapi 5 New Features and Improvements
+
+### Key Enhancements in Strapi 5
+
+**Performance Improvements:** <mcreference link="https://strapi.io/blog/vite-and-typescript-strapi-5" index="1">1</mcreference>
+- **Vite Bundler**: Faster development builds and hot module replacement
+- **TypeScript Rewrite**: Complete codebase migration for better performance and type safety
+- **Improved Admin Panel**: Faster loading times and better user experience
+
+**Document Service API Benefits:**
+- **Simplified API Structure**: Flattened response format reduces complexity
+- **Better Performance**: Optimized queries and reduced data transfer
+- **Enhanced Developer Experience**: More intuitive API design
+
+**Content Management Improvements:**
+- **Draft & Publish Workflow**: Enhanced content lifecycle management
+- **Better Localization**: Improved internationalization support
+- **Advanced Relations**: More flexible content relationships
+
+### Migration from Strapi v4
+
+If you're migrating from Strapi v4, key considerations include:
+
+**Automatic Migrations:**
+- Database schema updates are handled automatically
+- Most Entity Service calls are migrated via codemods
+- Admin panel configurations are preserved
+
+**Manual Updates Required:**
+- Custom Entity Service decorators → Document Service middlewares
+- Custom `findOne` calls with specific `id` parameters
+- Frontend API calls to use new response format
+- TypeScript type definitions
+
+**Migration Command:**
+```bash
+# Run Strapi 5 migration
+npx @strapi/upgrade major
+```
+
+**Compatibility Mode:**
+Use the `Strapi-Response-Format: v4` header during migration to maintain v4 response format temporarily:
+
+```javascript
+// Temporary compatibility for gradual migration
+const response = await fetch('/api/posts', {
+  headers: {
+    'Strapi-Response-Format': 'v4'
+  }
+});
+```
+
 ## Advanced Features
 
 ### Step 21: Implement Search
@@ -963,29 +1265,78 @@ export async function POST(request: NextRequest) {
 
 ## Troubleshooting
 
-### Common Issues:
+### Common Strapi 5 Issues:
+
+1. **Document Service API Errors**: 
+   - **Issue**: `strapi.entityService is not a function`
+   - **Solution**: Update to use `strapi.documents()` instead of `strapi.entityService`
+
+2. **Response Format Issues**:
+   - **Issue**: Data nested under `attributes` property
+   - **Solution**: Update frontend code to use flattened response format or add `Strapi-Response-Format: v4` header temporarily
+
+3. **DocumentId vs ID Confusion**:
+   - **Issue**: API calls failing with `documentId` parameter
+   - **Solution**: Use `documentId` for content identification, `id` for database records
+
+4. **TypeScript Compilation Errors**:
+   - **Issue**: Type errors after Strapi 5 upgrade
+   - **Solution**: Update TypeScript configuration and regenerate types
+
+### Common General Issues:
 
 1. **CORS Errors**: Configure CORS in Strapi's `config/middlewares.ts`
-2. **Permission Denied**: Check API permissions in Strapi admin
-3. **Image URLs**: Ensure media URLs are properly constructed
+2. **Permission Denied**: Check API permissions in Strapi admin panel
+3. **Image URLs**: Ensure media URLs are properly constructed with base URL
 4. **Environment Variables**: Verify all environment variables are set correctly
+
+### Strapi 5 Migration Issues:
+
+1. **Codemod Failures**:
+   - **Issue**: `__TODO__` placeholders in migrated code
+   - **Solution**: Manually replace with appropriate `documentId` values
+
+2. **Custom Entity Service Decorators**:
+   - **Issue**: Custom decorators not working
+   - **Solution**: Migrate to Document Service middlewares
+
+3. **Database Connection Issues**:
+   - **Issue**: Database connection errors after upgrade
+   - **Solution**: Update database configuration for Strapi 5 requirements
 
 ### Performance Optimization:
 
 1. **Image Optimization**: Use Next.js Image component with Strapi images
-2. **Caching**: Implement proper caching strategies
+2. **Caching**: Implement proper caching strategies with new response format
 3. **Bundle Size**: Only import necessary Strapi data
+4. **Vite Benefits**: Leverage Strapi 5's Vite bundler for faster development
 
 ## Conclusion
 
-You now have a fully functional blog powered by Strapi CMS and Next.js! Your content creators can manage posts, authors, and categories through the Strapi admin interface, while your Next.js frontend provides a fast, SEO-friendly user experience.
+You now have a fully functional blog powered by **Strapi 5** CMS and Next.js! This guide has been updated to leverage all the latest Strapi 5 features including:
+
+✅ **Document Service API** for improved performance and developer experience  
+✅ **Flattened response format** for simpler data handling  
+✅ **Enhanced TypeScript support** with auto-generated types  
+✅ **Vite bundler** for faster development builds  
+✅ **Improved permissions system** with RBAC and Users & Permissions plugin  
+
+Your content creators can manage posts, authors, and categories through the modern Strapi 5 admin interface, while your Next.js frontend provides a fast, SEO-friendly user experience with the latest API improvements.
 
 ### Next Steps:
 
-- Explore Strapi plugins for additional functionality
-- Implement user authentication and user-generated content
-- Add internationalization support
-- Set up automated backups for your content
-- Consider implementing a staging environment
+- **Explore Strapi 5 Features**: Take advantage of the new Document Service API and improved TypeScript support
+- **Implement Advanced Features**: Add user authentication, search functionality, and comment systems
+- **Optimize Performance**: Leverage Vite bundler and new caching strategies
+- **Add Internationalization**: Use Strapi 5's enhanced localization features
+- **Set up CI/CD**: Implement automated deployments with the new migration tools
+- **Monitor and Scale**: Set up proper monitoring for your Strapi 5 application
 
-For more advanced features and customizations, refer to the [official Strapi documentation](https://docs.strapi.io) and [Next.js documentation](https://nextjs.org/docs).
+### Resources:
+
+- **Strapi 5 Documentation**: [docs.strapi.io](https://docs.strapi.io)
+- **Migration Guide**: [Strapi v4 to v5 Migration](https://docs.strapi.io/dev-docs/migration/v4-to-v5)
+- **Next.js Documentation**: [nextjs.org/docs](https://nextjs.org/docs)
+- **TypeScript with Strapi**: [Strapi TypeScript Guide](https://docs.strapi.io/cms/typescript)
+
+This implementation guide ensures your blog is built with the latest Strapi 5 best practices and is ready for production use!
