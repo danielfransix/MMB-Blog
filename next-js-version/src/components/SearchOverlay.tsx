@@ -86,7 +86,7 @@ export default function SearchOverlay({ isOpen, onClose }: SearchOverlayProps) {
         </form>
         {searchQuery && (
           <div className="search-results">
-            <p className="search-results-text">Press Enter or click the search icon to search for "{searchQuery}"</p>
+            <p className="search-results-text">Press Enter or click the search icon to search for &quot;{searchQuery}&quot;</p>
           </div>
         )}
       </div>

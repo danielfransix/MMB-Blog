@@ -1,7 +1,6 @@
 'use client';
 import { useState, useRef, useEffect } from 'react';
 import HeroCard from './HeroCard';
-import styles from './HeroCarousel.module.css';
 
 interface HeroPost {
   id: number;
@@ -31,7 +30,6 @@ export default function HeroCarousel({ posts }: HeroCarouselProps) {
   const cardWidth = viewportWidth * 0.7;
   const gap = 16;
   const containerWidth = cardWidth * displayPosts.length + gap * (displayPosts.length - 1);
-  const maxTranslate = -(containerWidth - (viewportWidth - 16));
 
   useEffect(() => {
     const updateViewportWidth = () => {

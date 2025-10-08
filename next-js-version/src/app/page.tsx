@@ -1,9 +1,7 @@
-import Image from "next/image";
 import Link from "next/link";
 import PostCard from "../components/PostCard";
 import HeroCarousel from "../components/HeroCarousel";
 import { heroPostsData, postsData } from "../data/posts";
-import type { PostData } from "../data/posts";
 
 // Hero posts data is now imported from ../data/posts
 

@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import { heroPostsData, postsData } from "../../data/posts";
 import PostCard from "../../components/PostCard";
@@ -18,7 +18,7 @@ interface SearchResult {
   matchType: 'title' | 'excerpt' | 'category' | 'author';
 }
 
-export default function SearchPage() {
+function SearchContent() {
   const searchParams = useSearchParams();
   const query = searchParams.get('q') || '';
   const [searchResults, setSearchResults] = useState<SearchResult[]>([]);
@@ -222,5 +222,13 @@ export default function SearchPage() {
         )}
       </div>
     </div>
+  );
+}
+
+export default function SearchPage() {
+  return (
+    <Suspense fallback={<div className="page-main-container"><div className="page-section-container">Loading...</div></div>}>
+      <SearchContent />
+    </Suspense>
   );
 }

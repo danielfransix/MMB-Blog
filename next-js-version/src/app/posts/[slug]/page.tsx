@@ -18,9 +18,6 @@ interface BlogPostPageProps {
 }
 
 export default function BlogPostPage({ params }: BlogPostPageProps) {
-  const [email, setEmail] = useState("");
-  const [isSubscribed, setIsSubscribed] = useState(false);
-
   // Unwrap the params Promise
   const { slug } = use(params);
 
@@ -34,12 +31,6 @@ export default function BlogPostPage({ params }: BlogPostPageProps) {
   if (!post) {
     notFound();
   }
-
-  const handleSubscribe = (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsSubscribed(true);
-    setEmail("");
-  };
 
   const handleComment = (data: { name: string; email: string; comment: string }) => {
     // Handle comment submission
