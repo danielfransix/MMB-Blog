@@ -5,6 +5,7 @@ import {
   NavigationMenuLink,
 } from "@/components/ui/navigation-menu";
 import { Icon } from "@iconify/react";
+import Image from "next/image";
 import {
   Pagination,
   PaginationContent,
@@ -23,7 +24,7 @@ export function Home() {
           <div className="home-nav-content">
             <div className="home-logo-container">
               <link />
-              <img src="https://wqnmyfkavrotpmupbtou.supabase.co/storage/v1/object/public/user-assets/1169/components/Ellipse5-VXn6niw0XcU.png" alt="MakeMeBeautiful blog logo" />
+              <Image src="https://wqnmyfkavrotpmupbtou.supabase.co/storage/v1/object/public/user-assets/1169/components/Ellipse5-VXn6niw0XcU.png" alt="MakeMeBeautiful blog logo" width={50} height={50} />
             </div>
             <div className="home-social-container">
               <div className="home-social-icon">
@@ -66,10 +67,12 @@ export function Home() {
       </div>
       <div className="home-content">
         <div className="home-hero-image-container">
-          <img
+          <Image
             src="https://wqnmyfkavrotpmupbtou.supabase.co/storage/v1/object/public/user-assets/1169/components/HeroImage-zzRGYhaHYLm.png"
             className="home-hero-image"
             alt="Featured blog post hero image"
+            width={800}
+            height={400}
           />
         </div>
         <div>
@@ -128,10 +131,12 @@ export function Home() {
         <div className="flex gap-x-2">
           <div className="flex flex-col items-center gap-y-2">
             <div className="w-full h-56 flex flex-col justify-start items-start overflow-clip">
-              <img
+              <Image
                 src="https://wqnmyfkavrotpmupbtou.supabase.co/storage/v1/object/public/user-assets/1169/components/HeroImage-5DJYGO1mbjl.png"
                 className="w-full h-auto"
                 alt="Popular blog post thumbnail"
+                width={400}
+                height={224}
               />
             </div>
             <h3 className="font-sans font-semibold text-2xl">This is a very nice blogpost</h3>
@@ -142,10 +147,12 @@ export function Home() {
           </div>
           <div className="flex flex-col items-center gap-y-2">
             <div className="w-full h-56 overflow-hidden flex flex-col justify-start items-start">
-              <img
+              <Image
                 src="https://wqnmyfkavrotpmupbtou.supabase.co/storage/v1/object/public/user-assets/1169/components/HeroImage-5DJYGO1mbjl.png"
                 className="w-full h-auto"
                 alt="Popular blog post thumbnail"
+                width={400}
+                height={224}
               />
             </div>
             <h3 className="font-sans font-semibold text-2xl">This is a very nice blogpost</h3>
@@ -156,10 +163,12 @@ export function Home() {
           </div>
           <div className="flex flex-col items-center gap-y-2">
             <div className="w-full h-56 overflow-hidden flex flex-col justify-start items-start">
-              <img
+              <Image
                 src="https://wqnmyfkavrotpmupbtou.supabase.co/storage/v1/object/public/user-assets/1169/components/HeroImage-5DJYGO1mbjl.png"
                 className="w-full h-auto"
                 alt="Popular blog post thumbnail"
+                width={400}
+                height={224}
               />
             </div>
             <h3 className="font-sans font-semibold text-2xl">This is a very nice blogpost</h3>
@@ -172,10 +181,11 @@ export function Home() {
       </div>
       <div className="flex flex-col gap-y-6">
         <div className="border-2 rounded-xs border-primary w-full overflow-hidden relative" style={{aspectRatio: '3/2'}}>
-          <img
+          <Image
             src="https://wqnmyfkavrotpmupbtou.supabase.co/storage/v1/object/public/user-assets/1169/components/HeroImage-zzRGYhaHYLm.png"
             className="w-full h-full object-cover"
             alt="Blog post hero image"
+            fill
           />
         </div>
         <div>
@@ -229,10 +239,11 @@ export function Home() {
       </div>
       <div className="flex flex-col gap-y-6">
         <div className="border-2 rounded-xs border-primary w-full overflow-hidden relative" style={{aspectRatio: '3/2'}}>
-          <img
+          <Image
             src="https://wqnmyfkavrotpmupbtou.supabase.co/storage/v1/object/public/user-assets/1169/components/HeroImage-zzRGYhaHYLm.png"
             className="w-full h-full object-cover"
             alt="Blog post hero image"
+            fill
           />
         </div>
         <div>

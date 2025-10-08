@@ -4,7 +4,7 @@ import Image from "next/image";
 import { heroPostsData, postsData } from "../../../data/posts";
 import { commentsData } from "../../../data/comments";
 import AuthorInfo from "../../../components/AuthorInfo";
-import { useState, use } from "react";
+import { use } from "react";
 import PostCard from "../../../components/PostCard";
 import Comment from "../../../components/Comment";
 import CommentForm from "../../../components/CommentForm";
