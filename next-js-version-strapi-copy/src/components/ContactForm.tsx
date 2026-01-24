@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
 import Image from "next/image";
+import { fetchAPI } from "@/lib/strapi";
 
 interface ContactFormProps {
   title?: string;
@@ -35,16 +36,21 @@ export default function ContactForm({
     e.preventDefault();
     console.log('Contact form submitted:', formData);
     
-    // Simulate form submission
     try {
-      // Simulate API call delay
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      // We explicitly set the Authorization header to empty or null to force using the Public Role permissions
+      // instead of the API Token. API Tokens are often read-only by default unless configured otherwise.
+      // Since we enabled Public "create" access, removing the token ensures we use that rule.
+      console.log("Submitting payload to Strapi:", JSON.stringify({ data: formData }));
       
-      // Simulate random success/failure for demo purposes
-      // In real implementation, this would be your actual API call
-      const isSuccess = Math.random() > 0.3; // 70% success rate for demo
+      const response = await fetchAPI('/messages', {}, {
+        method: 'POST',
+        headers: {
+           Authorization: '', // Override the default token with an empty string to use Public role
+        },
+        body: JSON.stringify({ data: formData }),
+      });
       
-      if (isSuccess) {
+      if (response) {
         setFormStatus('success');
         // Reset form on success
         setFormData({
@@ -56,7 +62,8 @@ export default function ContactForm({
       } else {
         setFormStatus('error');
       }
-    } catch {
+    } catch (error) {
+      console.error("Form submission error:", error);
       setFormStatus('error');
     }
   };

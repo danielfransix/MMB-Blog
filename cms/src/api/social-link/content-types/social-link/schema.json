@@ -1,0 +1,32 @@
+{
+  "kind": "singleType",
+  "collectionName": "social_links",
+  "info": {
+    "singularName": "social-link",
+    "pluralName": "social-links",
+    "displayName": "Social Link",
+    "description": "Links to social media platforms"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "twitter": {
+      "type": "string",
+      "default": "https://www.google.com"
+    },
+    "facebook": {
+      "type": "string",
+      "default": "https://www.google.com"
+    },
+    "instagram": {
+      "type": "string",
+      "default": "https://www.google.com"
+    },
+    "linkedin": {
+      "type": "string",
+      "default": "https://www.google.com"
+    }
+  }
+}

@@ -12,14 +12,25 @@ export async function fetchAPI(
   options = {}
 ) {
   try {
-    const mergedOptions = {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${process.env.NEXT_PUBLIC_STRAPI_API_TOKEN}`,
-      },
-      ...options,
+    // Merge default options with user options
+    const defaultHeaders = {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${process.env.NEXT_PUBLIC_STRAPI_API_TOKEN}`,
     };
 
+    const mergedOptions = {
+      ...options,
+      headers: {
+        ...defaultHeaders,
+        ...((options as any).headers || {}),
+      },
+    };
+    
+    // Explicitly copy body if present in options, because spreading ...options usually works but let's be safe
+    if ((options as any).body) {
+      (mergedOptions as any).body = (options as any).body;
+    }
+    
     const queryString = qs.stringify(urlParamsObject);
     const requestUrl = `${getStrapiURL(
       `/api${path}${queryString ? `?${queryString}` : ""}`

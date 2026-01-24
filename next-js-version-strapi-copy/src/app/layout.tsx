@@ -3,6 +3,7 @@ import { DM_Mono, Manrope } from "next/font/google";
 import localFont from "next/font/local";
 import "./globals.css";
 import { Navigation } from "./navigation";
+import { fetchAPI } from "../lib/strapi";
 
 const calSans = localFont({
   src: "./fonts/CalSans.woff2",
@@ -31,13 +32,16 @@ const dmMono = DM_Mono({
   weight: ["300", "400", "500"],
 });
 
-export default function RootLayout({ children, }: Readonly<{ children: React.ReactNode }>) {
+export default async function RootLayout({ children, }: Readonly<{ children: React.ReactNode }>) {
+  const socialData = await fetchAPI("/social-link");
+  const socialLinks = socialData?.data?.attributes || {};
+
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`${manrope.variable} ${dmMono.variable} ${calSans.variable} layout-body-container antialiased`} suppressHydrationWarning>
         <Navigation />
         {children}
-        <Footer />
+        <Footer socialLinks={socialLinks} />
       </body>
     </html>
   );
