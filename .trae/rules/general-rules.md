@@ -1,0 +1,2 @@
+1. remember only perofrm one edit at a time, dont overwhelm the edit tool. 
+2. always think carefully about the task at hand or issue to be resolved, before you jump into edits, plan how this can be done neatly, outline your plan to me before you then continue with needed edits.

@@ -1,0 +1,4 @@
+.carousel-container {
+  transform: var(--carousel-transform);
+  width: var(--carousel-width);
+}

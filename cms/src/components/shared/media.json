@@ -1,0 +1,23 @@
+{
+  "collectionName": "components_shared_media",
+  "info": {
+    "displayName": "Media"
+  },
+  "options": {},
+  "attributes": {
+    "file": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "caption": {
+      "type": "string"
+    }
+  },
+  "config": {}
+}

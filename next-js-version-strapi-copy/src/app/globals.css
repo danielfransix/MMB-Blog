@@ -1,19 +1,28 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
+@layer base {
+  body {
+    font-family: var(--font-sans);
+  }
+  code, pre {
+    font-family: var(--font-mono);
+  }
+}
+
 @custom-variant dark (&:is(.dark *));
 
 /* Apply Cal Sans to all headings */
 h1, h2, h3, h4, h5, h6, .h7 {
-  font-family: var(--font-cal-sans), sans-serif;
+  font-family: var(--font-title);
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-  --font-cal: var(--font-cal-sans);
+  --font-title: var(--font-title);
+  --font-sans: var(--font-sans);
+  --font-mono: var(--font-mono);
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
@@ -147,7 +156,7 @@ h1, h2, h3, h4, h5, h6, .h7 {
   }
   
   .layout-footer-copyright {
-    @apply font-mono;
+    @apply font-sans;
   }
   
   .layout-footer-social-links {
@@ -164,7 +173,7 @@ h1, h2, h3, h4, h5, h6, .h7 {
 
   /* Navigation Classes */
   .nav-mobile-menu-container {
-    @apply flex flex-col space-y-4 p-4 font-mono;
+    @apply flex flex-col space-y-4 p-4;
   }
   
   .nav-mobile-menu-link {
@@ -172,7 +181,7 @@ h1, h2, h3, h4, h5, h6, .h7 {
   }
   
   .nav-desktop-menu-container {
-    @apply font-mono hidden sm:flex items-center space-x-8;
+    @apply hidden sm:flex items-center space-x-8;
   }
   
   .nav-desktop-menu-link {
@@ -192,7 +201,7 @@ h1, h2, h3, h4, h5, h6, .h7 {
   }
   
   .nav-logo-link {
-    @apply font-cal text-xl font-bold text-gray-800 hover:text-[var(--hover-green)] transition-colors;
+    @apply font-title text-xl font-bold text-gray-800 hover:text-[var(--hover-green)] transition-colors;
   }
   
   .nav-actions-container {
@@ -224,7 +233,7 @@ h1, h2, h3, h4, h5, h6, .h7 {
   }
   
   .nav-mobile-title {
-    @apply font-mono text-lg font-bold text-gray-800;
+    @apply text-lg font-bold text-gray-800;
   }
   
   .nav-mobile-close-button {
@@ -237,7 +246,7 @@ h1, h2, h3, h4, h5, h6, .h7 {
 
   /* Page Layout Classes */
   .page-main-container {
-    @apply font-mono;
+    
   }
   
   .page-section-container {
@@ -257,11 +266,11 @@ h1, h2, h3, h4, h5, h6, .h7 {
   }
   
   .page-title-main {
-    @apply font-cal text-3xl;
+    @apply font-title text-3xl;
   }
   
   .page-title-large {
-    @apply font-cal text-4xl;
+    @apply font-title text-4xl;
   }
 
   .about-page-header {
@@ -350,7 +359,7 @@ h1, h2, h3, h4, h5, h6, .h7 {
 
   /* Blog Post Classes */
   .blog-post-container {
-    @apply font-mono;
+    
   }
   
   .blog-post-article {
@@ -362,7 +371,7 @@ h1, h2, h3, h4, h5, h6, .h7 {
   }
   
   .blog-post-title {
-    @apply font-cal text-4xl md:text-5xl font-bold mb-4;
+    @apply font-title text-4xl md:text-5xl font-bold mb-4;
   }
   
   .blog-post-author-info {
@@ -405,7 +414,7 @@ h1, h2, h3, h4, h5, h6, .h7 {
   }
   
   .newsletter-title {
-    @apply font-cal text-2xl font-bold mb-4;
+    @apply font-title text-2xl font-bold mb-4;
   }
   
   .newsletter-subtitle {
@@ -434,7 +443,7 @@ h1, h2, h3, h4, h5, h6, .h7 {
   }
   
   .comments-title {
-    @apply font-cal text-2xl font-bold mb-6;
+    @apply font-title text-2xl font-bold mb-6;
   }
   
   .comments-form {
@@ -653,16 +662,16 @@ h1, h2, h3, h4, h5, h6, .h7 {
   }
 
   .hero-card-content {
-    @apply w-full flex flex-col justify-start items-stretch pt-5 gap-3;
+    @apply w-full flex flex-col justify-start items-stretch pt-5 px-4 gap-3;
   }
 
   .hero-card-title {
-    @apply font-cal text-5xl md:text-4xl lg:text-5xl font-semibold leading-tight flex text-left transition-colors;
+    @apply font-title text-5xl md:text-4xl lg:text-5xl font-semibold leading-tight text-left transition-colors;
   }
 
   @media (max-width: 767px) {
     .hero-card-title {
-      font-size: 3rem !important;
+      font-size: 2.25rem !important;
     }
   }
 
@@ -675,7 +684,7 @@ h1, h2, h3, h4, h5, h6, .h7 {
   }
 
   .hero-card-category {
-    @apply font-mono text-base;
+    @apply text-base;
   }
 
   .hero-card-separator {
@@ -686,11 +695,11 @@ h1, h2, h3, h4, h5, h6, .h7 {
 
 
   .hero-card-date {
-    @apply font-mono text-base text-gray-600;
+    @apply text-base text-gray-600;
   }
 
   .hero-card-description {
-    @apply font-mono text-base text-left line-clamp-3;
+    @apply text-base text-left line-clamp-3;
   }
 
   .author-info-container {
@@ -795,7 +804,7 @@ h1, h2, h3, h4, h5, h6, .h7 {
   }
 
   .post-card-title {
-  @apply font-cal text-xl font-semibold mb-2 transition-colors;
+  @apply font-title text-xl font-semibold mb-2 transition-colors;
 }
 
   .post-card-date {
@@ -803,7 +812,7 @@ h1, h2, h3, h4, h5, h6, .h7 {
   }
 
   .post-card-read-link {
-  @apply font-mono text-black transition-colors inline-flex items-center gap-2 relative;
+  @apply text-black transition-colors inline-flex items-center gap-2 relative;
 }
 
   .post-card-read-text {
@@ -823,7 +832,7 @@ h1, h2, h3, h4, h5, h6, .h7 {
 }
 
   .search-modal {
-    @apply bg-white rounded-lg p-6 w-full max-w-md mx-auto font-mono;
+    @apply bg-white rounded-lg p-6 w-full max-w-md mx-auto;
   }
 
   .search-header {
@@ -904,7 +913,7 @@ h1, h2, h3, h4, h5, h6, .h7 {
   }
 
   .home-brand-text {
-    @apply font-cal font-bold;
+    @apply font-title font-bold;
   }
 
   .home-brand-dot {
@@ -936,7 +945,7 @@ h1, h2, h3, h4, h5, h6, .h7 {
   }
 
   .home-hero-title {
-    @apply font-cal font-semibold text-3xl;
+    @apply font-title font-semibold text-3xl;
   }
 
   .home-meta-container {
@@ -949,7 +958,7 @@ h1, h2, h3, h4, h5, h6, .h7 {
 
   /* Search Page Classes */
   .search-page-container {
-    @apply min-h-screen bg-white font-mono;
+    @apply min-h-screen bg-white;
   }
 
   .search-page-content {
@@ -961,7 +970,7 @@ h1, h2, h3, h4, h5, h6, .h7 {
   }
 
   .search-page-title {
-    @apply font-cal text-4xl md:text-5xl font-bold mb-8 text-gray-900;
+    @apply font-title text-4xl md:text-5xl font-bold mb-8 text-gray-900;
   }
 
   .search-page-input-container {

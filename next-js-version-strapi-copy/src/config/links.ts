@@ -1,0 +1,31 @@
+// Links configuration file
+// All clickable elements should reference these variables
+
+export const LINKS = {
+  // Default link for all interactive elements
+  GOOGLE_HOMEPAGE: 'https://www.google.com',
+  
+  // Hero card links
+  HERO_CARD_1: 'https://www.google.com',
+  HERO_CARD_2: 'https://www.google.com',
+  HERO_CARD_3: 'https://www.google.com',
+  
+  // Post card links are now managed in ../data/posts.ts
+  
+  // Navigation links
+  NAV_HOME: '/',
+  NAV_ABOUT: '/about',
+  NAV_BLOG: '/posts',
+  NAV_CONTACT: '/contact',
+  
+  // Social media links
+  SOCIAL_FACEBOOK: 'https://www.google.com',
+  SOCIAL_TWITTER: 'https://www.google.com',
+  SOCIAL_INSTAGRAM: 'https://www.google.com',
+  SOCIAL_LINKEDIN: 'https://www.google.com',
+  
+  // Other interactive elements
+  LOGO: '/',
+  SEARCH: 'https://www.google.com',
+  NEWSLETTER_SIGNUP: 'https://www.google.com'
+};

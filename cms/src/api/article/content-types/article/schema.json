@@ -1,0 +1,66 @@
+{
+  "kind": "collectionType",
+  "collectionName": "articles",
+  "info": {
+    "singularName": "article",
+    "pluralName": "articles",
+    "displayName": "Article"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "default": "Article default title",
+      "required": true
+    },
+    "slug": {
+      "type": "uid",
+      "targetField": "title",
+      "required": true
+    },
+    "excerpt": {
+      "type": "text",
+      "required": true
+    },
+    "coverImage": {
+      "type": "media",
+      "multiple": false,
+      "required": true,
+      "allowedTypes": [
+        "images",
+        "videos"
+      ]
+    },
+    "author": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::author.author",
+      "inversedBy": "articles"
+    },
+    "category": {
+      "type": "enumeration",
+      "enum": [
+        "technology",
+        "design",
+        "development"
+      ]
+    },
+    "publishedDate": {
+      "type": "date"
+    },
+    "blocks": {
+      "type": "dynamiczone",
+      "components": [
+        "shared.rich-text",
+        "shared.media"
+      ]
+    },
+    "featured": {
+      "type": "boolean",
+      "default": false
+    }
+  }
+}
